@@ -1,0 +1,1702 @@
+[
+  {
+    "name": "Crowlingo Hotel 1",
+    "address": "Sligo, 68 Main St",
+    "rooms": [
+      {
+        "roomNumber": "001",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "002",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "003",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "004",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "005",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "006",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "007",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "008",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "009",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "010",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "011",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "012",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "013",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "014",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "015",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "016",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "017",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "018",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "019",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "020",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "021",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "022",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "023",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "024",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "025",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "026",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "027",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "028",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "029",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "030",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "031",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "032",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "033",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "034",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "035",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "036",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "037",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "038",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "039",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "040",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "041",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      }
+    ]
+  },
+  {
+    "name": "Skyline Hotel 2",
+    "address": "Kilkenny, 132 Ocean Ave",
+    "rooms": [
+      {
+        "roomNumber": "001",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "002",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "003",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "004",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "005",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "006",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "007",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "008",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "009",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "010",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "011",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "012",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "013",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "014",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "015",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "016",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "017",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "018",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "019",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "020",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "021",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "022",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "023",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "024",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "025",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "026",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "027",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "028",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "029",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "030",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "031",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "032",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "033",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "034",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "035",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "036",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "037",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "038",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "039",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "040",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "041",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "042",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "043",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "044",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "045",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "046",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "047",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "048",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "049",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "050",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "051",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "052",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "053",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "054",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "055",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "056",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "057",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "058",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "059",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "060",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "061",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "062",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "063",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "064",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "065",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "066",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "067",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "068",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "069",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "070",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "071",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "072",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "073",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "074",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "075",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "076",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "077",
+        "roomStatus": "VANCANT",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "078",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "079",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "080",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "081",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "082",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "083",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "084",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "085",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "086",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "087",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "088",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "089",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "090",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "091",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "092",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "093",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "094",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "095",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      }
+    ]
+  },
+  {
+    "name": "Emerald Hotel 3",
+    "address": "Limerick, 194 College Rd",
+    "rooms": [
+      {
+        "roomNumber": "001",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "002",
+        "roomStatus": "VANCANT",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "003",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "004",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "005",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "006",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "007",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "008",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "009",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "010",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "011",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "012",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "013",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "014",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "015",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "016",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "017",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "018",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "019",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "020",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "021",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "022",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "023",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "024",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "025",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "026",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "027",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "028",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "029",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "030",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "031",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "032",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "033",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "034",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "035",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "036",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "037",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "038",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "039",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "040",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "041",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "042",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "043",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "044",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "045",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "046",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "047",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "048",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "049",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "050",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "051",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "052",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "053",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "054",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "055",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "056",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "057",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "058",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "059",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "060",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "061",
+        "roomStatus": "VANCANT",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "062",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "063",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "064",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "065",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "066",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "067",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "068",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "069",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "070",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "071",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "072",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "073",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "074",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "075",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "076",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "077",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "078",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "079",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "080",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "081",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "082",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "083",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "084",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "085",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "086",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "087",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "088",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "089",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "090",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      }
+    ]
+  },
+  {
+    "name": "Sunset Hotel 4",
+    "address": "Wexford, 72 Ocean Ave",
+    "rooms": [
+      {
+        "roomNumber": "001",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "002",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "003",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "004",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "005",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "006",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "007",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "008",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "009",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "010",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "011",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "012",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "013",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "014",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "015",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "016",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "017",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "018",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "019",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "020",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "021",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "022",
+        "roomStatus": "VANCANT",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "023",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "024",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "025",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "026",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "027",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "028",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "029",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "030",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "031",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "032",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "033",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "034",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "035",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "036",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "037",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "038",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "039",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "040",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "041",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "042",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "043",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "044",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "045",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "046",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "047",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "048",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "049",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "050",
+        "roomStatus": "VANCANT",
+        "roomType": "SUITE"
+      }
+    ]
+  },
+  {
+    "name": "Crowlingo Hotel 5",
+    "address": "Galway, 100 College Rd",
+    "rooms": [
+      {
+        "roomNumber": "001",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "002",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "003",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "004",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "005",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "006",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "007",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "008",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "009",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "010",
+        "roomStatus": "VANCANT",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "011",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "012",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "013",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "014",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "015",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "016",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "017",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "018",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "019",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "020",
+        "roomStatus": "OCCUPIED",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "021",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "022",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "023",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "024",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "025",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "026",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "027",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "028",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "029",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "030",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "031",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "032",
+        "roomStatus": "OCCUPIED",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "033",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "034",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "035",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "036",
+        "roomStatus": "VANCANT",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "037",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "038",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "039",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "040",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "041",
+        "roomStatus": "VANCANT",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "042",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "043",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "044",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "045",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "046",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "047",
+        "roomStatus": "OCCUPIED",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "048",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "049",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "050",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "051",
+        "roomStatus": "OCCUPIED",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "052",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "DOUBLE"
+      },
+      {
+        "roomNumber": "053",
+        "roomStatus": "VANCANT",
+        "roomType": "FAMILY"
+      },
+      {
+        "roomNumber": "054",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "SUITE"
+      },
+      {
+        "roomNumber": "055",
+        "roomStatus": "VANCANT",
+        "roomType": "SINGLE"
+      },
+      {
+        "roomNumber": "056",
+        "roomStatus": "NEED_CLEANING",
+        "roomType": "TWIN"
+      },
+      {
+        "roomNumber": "057",
+        "roomStatus": "VANCANT",
+        "roomType": "TRIPLE"
+      },
+      {
+        "roomNumber": "058",
+        "roomStatus": "UNDER_MAINTENANCE",
+        "roomType": "SUITE"
+      }
+    ]
+  }
+]
