@@ -3,6 +3,9 @@ HELP.md
 build/
 gradle/wrapper/gradle-wrapper.jar
 **/src/main/**/build/
+**/src/main/**/resources/**/*.py
+**/src/main/**/resources/**/*.python
+
 **/src/test/**/build/
 
 ### STS ###

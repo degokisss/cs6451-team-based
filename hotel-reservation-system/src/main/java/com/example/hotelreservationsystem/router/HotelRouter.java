@@ -16,25 +16,25 @@ public class HotelRouter {
 
     @Autowired HotelRepository hotelRepository;
 
-    @GetMapping("/hotel/mock")
-    public List<Hotel> addRooms() {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            List<Hotel> hotels = List.of(mapper.readValue(ResourceUtils.getFile("classpath:hotels.json"), Hotel[].class));
-            for (Hotel hotel : hotels) {
-                for (Room room: hotel.getRooms()) {
-                    room.setHotel(hotel);
-                }
-            }
-            hotelRepository.saveAll(hotels);
-            return hotels;
-        } catch (Exception e) {
-            System.console().printf(e.getMessage());
-            return List.of();
-        }
-    }
+//    @GetMapping("/hotel/mock")
+//    public List<Hotel> addRooms() {
+//        try {
+//            ObjectMapper mapper = new ObjectMapper();
+//            List<Hotel> hotels = List.of(mapper.readValue(ResourceUtils.getFile("classpath:hotels.json"), Hotel[].class));
+//            for (Hotel hotel : hotels) {
+//                for (Room room: hotel.getRooms()) {
+//                    room.setHotel(hotel);
+//                }
+//            }
+//            hotelRepository.saveAll(hotels);
+//            return hotels;
+//        } catch (Exception e) {
+//            System.console().printf(e.getMessage());
+//            return List.of();
+//        }
+//    }
 
-    @GetMapping("/hotels")
+    @GetMapping("/hotels/list")
     public List<Hotel> getHotels() {
         try {
             return hotelRepository.findAll();
