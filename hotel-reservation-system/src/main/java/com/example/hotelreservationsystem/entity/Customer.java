@@ -1,9 +1,11 @@
 package com.example.hotelreservationsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "customer")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,8 +14,8 @@ public class Customer {
     private String name;
     private String email;
     private String phoneNumber;
+    private String passwordHash;
     private MembershipTier membershipTier;
-    private String token;
     private String googleAuthToken;
 
 
@@ -45,11 +47,11 @@ public class Customer {
     public void setMembershipTier(MembershipTier membershipTier) {
         this.membershipTier = membershipTier;
     }
-    public String getToken() {
-        return token;
+    public String getPasswordHash() {
+        return passwordHash;
     }
-    public void setToken(String token) {
-        this.token = token;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
     public String getGoogleAuthToken() {
         return googleAuthToken;
