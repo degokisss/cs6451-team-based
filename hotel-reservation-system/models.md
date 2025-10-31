@@ -1,22 +1,22 @@
 ## Model - Login/Logout
-### Login
-1. username-password login
-2. google login: need to use Google-SDK
-3. Entity: **Customer**
+1. Login
+- username-password login
+- google login: need to use Google-SDK
+- Entity: **Customer**
 Do you think we need to support **Authentication Token Mechanism**?
-### Registration 
+2. Registration 
 Using username-password to register, make sure hash the password before saving it to database.
-### Login out
+3. Login out
 
 ## Model - Booking
-1. Make sure the lock mechanism is working properly.
-2. Entity: **Order** 
-### Searching
-### Booking
-### Cancel
+- Make sure the lock mechanism is working properly.
+- Entity: **Order** 
+1. Searching
+2. Booking
+3. Cancel
 
 ## Model - Payment
-1. Make sure update the status of Order after payment finish
+- Make sure update the status of Order after payment finish
 
 ## Model - Management
 1. Customer Management: delete User...
