@@ -35,19 +35,24 @@ public class AuthenticationService{
         if (customerRepository.findByEmail(request.getEmail()).isPresent())
             throw new EmailAlreadyExistsException("Email already registered");
 
-        var customer = new Customer();
-        customer.setName(request.getName());
-        customer.setEmail(request.getEmail());
-        customer.setPasswordHash(passwordEncoder.encode(request.getPassword()));
-        customer.setPhoneNumber(request.getPhoneNumber());
-        customer.setRole(Role.USER);
-        customer.setMembershipTier(MembershipTier.BRONZE);
-        customer.setEnabled(true);
+        var customer = Customer.builder()
+                               .name(request.getName())
+                               .email(request.getEmail())
+                               .passwordHash(passwordEncoder.encode(request.getPassword()))
+                               .phoneNumber(request.getPhoneNumber())
+                               .role(Role.USER)
+                               .membershipTier(MembershipTier.BRONZE)
+                               .enabled(true)
+                               .build();
 
         var savedCustomer = customerRepository.save(customer);
         var token = tokenGeneration(customer);
 
-        return new LoginResponse(token, savedCustomer.getEmail(), savedCustomer.getName());
+        return LoginResponse.builder()
+                            .token(token)
+                            .email(savedCustomer.getEmail())
+                            .name(savedCustomer.getName())
+                            .build();
     }
 
     public LoginResponse login(LoginRequest request) {
@@ -61,7 +66,11 @@ public class AuthenticationService{
 
             var token = tokenGeneration(customer);
 
-            return new LoginResponse(token, customer.getEmail(), customer.getName());
+            return LoginResponse.builder()
+                                .token(token)
+                                .email(customer.getEmail())
+                                .name(customer.getName())
+                                .build();
         } catch (BadCredentialsException e) {
             throw new InvalidCredentialsException("Invalid email or password", e);
         }
@@ -71,7 +80,7 @@ public class AuthenticationService{
         var claims = new HashMap<String, Object>();
         claims.put("role", customer.getRole().name());
         claims.put("name", customer.getName());
-        return jwtUtil.generateToken(customer.getEmail(), claims);
+        return String.format("Bearer %s", jwtUtil.generateToken(customer.getEmail(), claims));
     }
 
     public Customer getCurrentUser(String email) {

@@ -1,13 +1,14 @@
 package com.example.hotelreservationsystem.exception;
 
 import com.example.hotelreservationsystem.dto.ErrorResponse;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -23,7 +24,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({InvalidCredentialsException.class, AuthenticationException.class})
-    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex) {
         var error = ErrorResponse.builder()
                                  .error("Authentication Failed")
                                  .message(ex.getMessage())
@@ -50,5 +51,23 @@ public class GlobalExceptionHandler {
                                  .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                                  .build();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        var errorMessages = ex.getBindingResult()
+                              .getAllErrors()
+                              .stream()
+                              .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                              .toList();
+
+        var message = String.join("; ", errorMessages);
+
+        var error = ErrorResponse.builder()
+                                 .error("Bad Request")
+                                 .message(message)
+                                 .status(HttpStatus.BAD_REQUEST.value())
+                                 .build();
+        return ResponseEntity.badRequest().body(error);
     }
 }

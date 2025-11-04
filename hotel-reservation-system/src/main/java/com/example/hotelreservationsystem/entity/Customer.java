@@ -2,9 +2,7 @@ package com.example.hotelreservationsystem.entity;
 
 import com.example.hotelreservationsystem.enums.MembershipTier;
 import com.example.hotelreservationsystem.enums.Role;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,9 +20,9 @@ import java.util.Collections;
 @Table(name = "customer", indexes = {
     @Index(name = "idx_customer_email", columnList = "email", unique = true)
 })
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Customer extends BaseEntityAudit implements UserDetails {
     @Column
     private String name;
