@@ -1,28 +1,25 @@
 package com.example.hotelreservationsystem.entity;
 
-public enum  RoomType {
-    NONE(0, "None", "error home", 0,0f),
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-    SINGLE(1, "Single", "sssss", 1, 100.0f),
-    DOUBLE(2, "Double", "sssss", 2, 150.0f),
-    TWIN(3, "Twin", "sssss", 2, 150.0f),
-    TRIPLE(4, "Triple", "sssss", 3, 250.0f),
-    FAMILY(5, "Family", "sssss", 5, 500.0f),
-    SUITE(6, "Suite", "sssss", 8, 800.0f),
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Entity
+@Table(name = "room_type")
+public class RoomType extends BaseEntityAudit {
+    @Column
+    private String name;
 
-    ;
+    @Column
+    private String description;
 
-    public final int roomTypeId;
-    public final String name;
-    public final String description;
-    public final int capacity;
-    public final float basePrice;
+    @Column
+    private float price;
 
-    RoomType(int roomTypeId, String name, String description, int capacity, float basePrice) {
-        this.roomTypeId = roomTypeId;
-        this.name = name;
-        this.description = description;
-        this.capacity = capacity;
-        this.basePrice = basePrice;
-    }
+    @Column
+    private Integer capacity;
 }

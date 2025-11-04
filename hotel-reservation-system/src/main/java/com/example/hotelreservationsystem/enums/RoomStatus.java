@@ -1,7 +1,7 @@
-package com.example.hotelreservationsystem.entity;
+package com.example.hotelreservationsystem.enums;
 
 public enum RoomStatus {
-    VANCANT,
+    VACANT,
     OCCUPIED,
     NEED_CLEANING,
     UNDER_MAINTENANCE,

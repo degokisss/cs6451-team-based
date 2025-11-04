@@ -1,10 +1,13 @@
 package com.example.hotelreservationsystem.entity;
 
+import com.example.hotelreservationsystem.enums.MembershipTier;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "customer")
@@ -15,12 +18,13 @@ public class Customer extends BaseEntityAudit {
     private String name;
     @Column
     private String email;
-    @Column
+    @Column(name = "phone_number")
     private String phoneNumber;
-    @Column
+    @Column(name = "password_hash")
     private String passwordHash;
-    @Column
+    @Column(name = "membership_tier")
+    @Enumerated(EnumType.STRING)
     private MembershipTier membershipTier;
-    @Column
+    @Column(name = "google_auth_token")
     private String googleAuthToken;
 }
