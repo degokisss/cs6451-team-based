@@ -14,11 +14,11 @@ class JwtUtilTest {
 
     private JwtUtil jwtUtil;
     private final String testEmail = "test@example.com";
-    private final String testSecret = "gang-of-four-secret-gang-of-four-secret-";
 
     @BeforeEach
     void setUp() {
         jwtUtil = new JwtUtil();
+        var testSecret = "gang-of-four-secret-gang-of-four-secret";
         ReflectionTestUtils.setField(jwtUtil, "secret", testSecret);
         ReflectionTestUtils.setField(jwtUtil, "expiration", 86400000L);
     }
