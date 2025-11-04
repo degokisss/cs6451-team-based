@@ -1,26 +1,32 @@
 package com.example.hotelreservationsystem.entity;
 
+import com.example.hotelreservationsystem.enums.MembershipTier;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "customer")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@NoArgsConstructor
 public class Customer extends BaseEntityAudit {
     @Column
     private String name;
     @Column
     private String email;
-    @Column
+    @Column(name = "phone_number")
     private String phoneNumber;
-    @Column
+    @Column(name = "password_hash")
     private String passwordHash;
-    @Column
+    @Column(name = "membership_tier")
+    @Enumerated(EnumType.STRING)
     private MembershipTier membershipTier;
-    @Column
+    @Column(name = "google_auth_token")
     private String googleAuthToken;
 }

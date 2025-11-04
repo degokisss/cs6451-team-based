@@ -1,4 +1,4 @@
-package com.example.hotelreservationsystem.entity;
+package com.example.hotelreservationsystem.enums;
 
 public enum MembershipTier {
     SILVER,
