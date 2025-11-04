@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({InvalidCredentialsException.class, AuthenticationException.class})
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex, WebRequest request) {
         var error = ErrorResponse.builder()
-                                 .error("Authentication Failed For User: " + request.getUserPrincipal())
+                                 .error("Authentication Failed")
                                  .message(ex.getMessage())
                                  .status(HttpStatus.UNAUTHORIZED.value())
                                  .build();
