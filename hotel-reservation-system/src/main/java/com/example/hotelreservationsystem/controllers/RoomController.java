@@ -16,8 +16,8 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping("rooms/search")
-    public List<Room> searchRooms(@RequestParam long roomType){
-        return roomService.searchedRooms(roomType);
+    public List<Room> searchRooms(@RequestParam Long roomTypeId){
+        return roomService.searchedRooms(roomTypeId);
     }
 
 
