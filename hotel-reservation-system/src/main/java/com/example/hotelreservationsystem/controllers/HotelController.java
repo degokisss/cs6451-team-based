@@ -2,7 +2,6 @@ package com.example.hotelreservationsystem.controllers;
 
 import com.example.hotelreservationsystem.entity.Hotel;
 import com.example.hotelreservationsystem.entity.Room;
-import com.example.hotelreservationsystem.repository.HotelRepository;
 import com.example.hotelreservationsystem.service.HotelService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +22,6 @@ public class HotelController {
         try {
             ObjectMapper mapper = new ObjectMapper();
             List<Hotel> hotels = List.of(mapper.readValue(ResourceUtils.getFile("classpath:hotels.json"), Hotel[].class));
-            for (Hotel hotel : hotels) {
-                for (Room room: hotel.getRooms()) {
-                    room.setHotel(hotel);
-                }
-            }
             hotelService.saveAll(hotels);
             return hotels;
         } catch (Exception e) {
