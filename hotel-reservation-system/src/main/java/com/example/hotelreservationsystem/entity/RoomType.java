@@ -3,11 +3,13 @@ package com.example.hotelreservationsystem.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
+@Getter
+@Setter
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "room_type")
 public class RoomType extends BaseEntityAudit {

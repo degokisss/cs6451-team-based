@@ -3,13 +3,20 @@ package com.example.hotelreservationsystem.entity;
 import com.example.hotelreservationsystem.converter.RoomStatusConverter;
 import com.example.hotelreservationsystem.enums.RoomStatus;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString(callSuper = true, exclude = {"hotel", "roomType"})
+@EqualsAndHashCode(callSuper = true, exclude = {"hotel", "roomType"})
 @Entity
 @Table(
     name = "room",
