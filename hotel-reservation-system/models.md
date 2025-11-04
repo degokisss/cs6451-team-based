@@ -9,6 +9,7 @@ Using username-password to register, make sure hash the password before saving i
 3. Login out
 
 ## Module - Booking
+**State Pattern**
 - Make sure the lock mechanism is working properly.
 - Entity: **Order** 
 1. Searching
@@ -16,6 +17,7 @@ Using username-password to register, make sure hash the password before saving i
 3. Cancel
 
 ## Module - Payment
+**Factory Pattern**
 - Make sure update the status of Order after payment finish
 
 ## Module - Management
@@ -32,10 +34,15 @@ Using username-password to register, make sure hash the password before saving i
 ## Base Service
 
 ### Notification Service
+**Factory Pattern**
 1. Email Notification
 2. SMS Notification
 
-### Price Service
+### Price Service 
+**Strategy Pattern**
+**Observer Pattern**
+**Decorator Pattern?**
+
 1. Dynamic Price
 
 ### Log Service
