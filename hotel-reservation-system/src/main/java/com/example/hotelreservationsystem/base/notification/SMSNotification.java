@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class SMSNotification implements INotification<String>{
+public class SMSNotification implements Notification<String> {
     @Override
     public boolean sendNotification(String message) {
         // sms implementation

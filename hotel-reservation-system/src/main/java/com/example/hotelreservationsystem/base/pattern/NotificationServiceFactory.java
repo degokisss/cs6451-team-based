@@ -1,7 +1,7 @@
 package com.example.hotelreservationsystem.base.pattern;
 
 import com.example.hotelreservationsystem.base.notification.EmailNotification;
-import com.example.hotelreservationsystem.base.notification.INotification;
+import com.example.hotelreservationsystem.base.notification.Notification;
 import com.example.hotelreservationsystem.base.notification.SMSNotification;
 import com.example.hotelreservationsystem.enums.NotificationType;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ public class NotificationServiceFactory {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> INotification<T> createNotificationService(NotificationType type) {
+    public <T> Notification<T> createNotificationService(NotificationType type) throws Exception {
         if (type == NotificationType.EMAIL) {
-            return (INotification<T>) emailNotification;
+            return (Notification<T>) emailNotification;
         } else if (type == NotificationType.SMS) {
-            return (INotification<T>) smsNotification;
+            return (Notification<T>) smsNotification;
         }
-        return null;
+        throw new Exception(type + " not yet implement");
     }
 }

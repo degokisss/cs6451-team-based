@@ -1,6 +1,6 @@
 package com.example.hotelreservationsystem;
 
-import com.example.hotelreservationsystem.base.notification.INotification;
+import com.example.hotelreservationsystem.base.notification.Notification;
 import com.example.hotelreservationsystem.base.pattern.NotificationServiceFactory;
 import com.example.hotelreservationsystem.enums.NotificationType;
 import org.junit.jupiter.api.Test;
@@ -36,10 +36,10 @@ public class MailNotificationTests {
     }
 
     @Test
-    public void testMailNotification() {
+    public void testMailNotification() throws Exception {
         doNothing().when(javaMailSender).send(any(SimpleMailMessage.class));
 
-        INotification<SimpleMailMessage> notification = notificationServiceFactory.createNotificationService(NotificationType.EMAIL);
+        Notification<SimpleMailMessage> notification = notificationServiceFactory.createNotificationService(NotificationType.EMAIL);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo("zanderchim78@test.com");
         message.setSubject("Test mail");
@@ -50,8 +50,8 @@ public class MailNotificationTests {
     }
 
     @Test
-    public void testSMSNotification() {
-        INotification<String> notification = notificationServiceFactory.createNotificationService(NotificationType.SMS);
+    public void testSMSNotification() throws Exception {
+        Notification<String> notification = notificationServiceFactory.createNotificationService(NotificationType.SMS);
         assertTrue(notification.sendNotification("This is a test SMS"));
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class EmailNotification implements INotification<SimpleMailMessage>{
+public class EmailNotification implements Notification<SimpleMailMessage> {
 
     @Autowired
     private JavaMailSender mailSender;
