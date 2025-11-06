@@ -51,6 +51,9 @@ class AuthenticationServiceTest {
     @InjectMocks
     private AuthenticationService authenticationService;
 
+    @InjectMocks
+    private UserDetailsServiceImpl userDetailsService;
+
     private Customer mockCustomer;
     private RegisterRequest registerRequest;
     private LoginRequest loginRequest;
@@ -75,7 +78,7 @@ class AuthenticationServiceTest {
     void testLoadUserByUsername_Success() {
         when(customerRepository.findByEmail("test@example.com")).thenReturn(Optional.of(mockCustomer));
 
-        var userDetails = authenticationService.loadUserByUsername("test@example.com");
+        var userDetails = userDetailsService.loadUserByUsername("test@example.com");
 
         assertNotNull(userDetails);
         assertEquals("test@example.com", userDetails.getUsername());
@@ -86,7 +89,7 @@ class AuthenticationServiceTest {
     void testLoadUserByUsername_NotFound() {
         when(customerRepository.findByEmail("test@example.com")).thenReturn(Optional.empty());
 
-        assertThrows(UsernameNotFoundException.class, () -> authenticationService.loadUserByUsername("test@example.com"));
+        assertThrows(UsernameNotFoundException.class, () -> userDetailsService.loadUserByUsername("test@example.com"));
     }
 
     @Test
@@ -99,9 +102,9 @@ class AuthenticationServiceTest {
         var response = authenticationService.register(registerRequest);
 
         assertNotNull(response);
-        assertEquals("mock.jwt.token", response.getToken());
-        assertEquals("test@example.com", response.getEmail());
-        assertEquals("Test User", response.getName());
+        assertEquals("mock.jwt.token", response.token());
+        assertEquals("test@example.com", response.email());
+        assertEquals("Test User", response.name());
         verify(customerRepository, times(1)).save(any(Customer.class));
         verify(jwtUtil, times(1)).generateToken(anyString(), any(Map.class));
     }
@@ -124,9 +127,9 @@ class AuthenticationServiceTest {
         var response = authenticationService.login(loginRequest);
 
         assertNotNull(response);
-        assertEquals("mock.jwt.token", response.getToken());
-        assertEquals("test@example.com", response.getEmail());
-        assertEquals("Test User", response.getName());
+        assertEquals("mock.jwt.token", response.token());
+        assertEquals("test@example.com", response.email());
+        assertEquals("Test User", response.name());
         verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
     }
 

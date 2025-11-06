@@ -47,7 +47,6 @@ class AuthenticationControllerTest {
     void setUp() {
         mockLoginResponse = LoginResponse.builder()
                                          .token("mock.jwt.token")
-                                         .type("Bearer")
                                          .email("test@example.com")
                                          .name("Test User")
                                          .build();
