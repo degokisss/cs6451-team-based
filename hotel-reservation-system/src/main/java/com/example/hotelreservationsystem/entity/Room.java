@@ -31,7 +31,8 @@ import lombok.ToString;
 public class Room extends BaseEntityAudit {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id") // 外键列
+    @JoinColumn(name = "hotel_id")
+    @JsonBackReference
     private Hotel hotel;
 
     @Column(name = "room_number")
