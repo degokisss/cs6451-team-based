@@ -1,9 +1,9 @@
 package com.example.hotelreservationsystem.controllers;
 
 import com.example.hotelreservationsystem.entity.Hotel;
-import com.example.hotelreservationsystem.entity.Room;
 import com.example.hotelreservationsystem.service.HotelService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class HotelController {
 
     @Autowired
@@ -25,7 +26,7 @@ public class HotelController {
             hotelService.saveAll(hotels);
             return hotels;
         } catch (Exception e) {
-            System.console().printf(e.getMessage());
+            log.error(e.getMessage());
             return List.of();
         }
     }
@@ -35,7 +36,7 @@ public class HotelController {
         try {
             return hotelService.findAll();
         } catch (Exception e) {
-            System.console().printf(e.getMessage());
+            log.error(e.getMessage());
             return List.of();
         }
     }
