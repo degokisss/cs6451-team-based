@@ -1,10 +1,12 @@
 package com.example.hotelreservationsystem.base.notification;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class EmailNotification implements INotification<SimpleMailMessage>{
 
@@ -13,12 +15,12 @@ public class EmailNotification implements INotification<SimpleMailMessage>{
 
     @Override
     public boolean sendNotification(SimpleMailMessage message) {
-        System.out.println("send email:" + message);
+        log.info("send email: {}", message);
         try {
             mailSender.send(message);
             return true;
         } catch (Exception e) {
-            System.console().printf(e.getMessage());
+            log.error("error sending email: {}", e.getMessage());
             return false;
         }
     }

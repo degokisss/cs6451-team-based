@@ -1,10 +1,15 @@
 package com.example.hotelreservationsystem.base.notification;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Service
+@Slf4j
 public class SMSNotification implements INotification<String>{
     @Override
     public boolean sendNotification(String message) {
         // sms implementation
-        System.out.println("send SMS: " + message);
+        log.info("send SMS: {}", message);
         return true;
     }
 }
