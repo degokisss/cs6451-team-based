@@ -46,6 +46,7 @@ public class Customer extends BaseEntityAudit implements UserDetails {
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private Role role = Role.USER;
 
     @Column(name = "enabled")

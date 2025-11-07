@@ -1,8 +1,10 @@
 package com.example.hotelreservationsystem.security;
 
+import com.example.hotelreservationsystem.service.TokenStorageService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
+@RequiredArgsConstructor
 public class JwtUtil {
+
+    private final TokenStorageService tokenStorageService;
 
     @Value("${jwt.secret:gang-of-four-secret}")
     private String secret;
@@ -53,11 +58,17 @@ public class JwtUtil {
 
     public String generateToken(String email) {
         var claims = new HashMap<String, Object>();
-        return createToken(claims, email);
+        String token = createToken(claims, email);
+        // Store token in Redis with TTL
+        tokenStorageService.storeToken(email, token, expiration);
+        return token;
     }
 
     public String generateToken(String email, Map<String, Object> extraClaims) {
-        return createToken(extraClaims, email);
+        String token = createToken(extraClaims, email);
+        // Store token in Redis with TTL
+        tokenStorageService.storeToken(email, token, expiration);
+        return token;
     }
 
     private String createToken(Map<String, Object> claims, String subject) {

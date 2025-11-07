@@ -5,6 +5,7 @@ import com.example.hotelreservationsystem.dto.LoginResponse;
 import com.example.hotelreservationsystem.dto.RegisterRequest;
 import com.example.hotelreservationsystem.dto.UserResponse;
 import com.example.hotelreservationsystem.service.AuthenticationService;
+import com.example.hotelreservationsystem.service.TokenStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+    private final TokenStorageService tokenStorageService;
 
     @PostMapping("/register")
     public ResponseEntity<LoginResponse> register(@RequestBody @Validated RegisterRequest request) {
@@ -49,6 +51,26 @@ public class AuthenticationController {
                                    .build();
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, String>> logout(@RequestHeader(value = "Authorization", required = false) String authHeader) {
+        var response = new HashMap<String, String>();
+
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            var token = authHeader.substring(7);
+            var removed = tokenStorageService.removeToken(token);
+
+            if (removed) {
+                response.put("message", "Logout successful");
+            } else {
+                response.put("message", "Token not found or already logged out");
+            }
+            return ResponseEntity.ok(response);
+        }
+
+        response.put("message", "Invalid Authorization header");
+        return ResponseEntity.badRequest().body(response);
     }
 
     @GetMapping("/health")

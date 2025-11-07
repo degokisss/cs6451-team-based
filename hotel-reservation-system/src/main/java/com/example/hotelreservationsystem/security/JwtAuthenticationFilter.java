@@ -1,5 +1,6 @@
 package com.example.hotelreservationsystem.security;
 
+import com.example.hotelreservationsystem.service.TokenStorageService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
+    private final TokenStorageService tokenStorageService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -33,6 +35,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             final var jwt = authHeader.substring(7);
+
+            if (!tokenStorageService.validateToken(jwt)) {
+                logger.debug("Token not found in Redis or expired, denying access");
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             final var userEmail = jwtUtil.extractEmail(jwt);
 
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
