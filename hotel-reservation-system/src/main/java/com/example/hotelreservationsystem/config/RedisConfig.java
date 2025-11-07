@@ -7,16 +7,19 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-/**
- * Configuration class for Redis integration.
- * <p>
- * This class defines a {@link RedisTemplate} bean with custom serializers for keys and values.
- * By setting {@link StringRedisSerializer} for keys, values, hash keys, and hash values,
- * it ensures that all data stored in Redis is serialized as plain strings.
- * This approach improves compatibility, readability, and interoperability with other systems
- * that may access Redis directly, and avoids issues with default Java serialization.
- */
+
 public class RedisConfig {
+    /**
+     * Configuration class for Redis integration.
+     * <p>
+     * This class defines a {@link RedisTemplate} bean with custom serializers for keys and values.
+     * By setting {@link StringRedisSerializer} for keys, values, hash keys, and hash values,
+     * it ensures that all data stored in Redis is serialized as plain strings.
+     * This approach improves compatibility, readability, and interoperability with other systems
+     * that may access Redis directly, and avoids issues with default Java serialization.
+     */
+    @Bean
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory connectionFactory) {
         var template = new RedisTemplate<String, String>();
         template.setConnectionFactory(connectionFactory);
 
