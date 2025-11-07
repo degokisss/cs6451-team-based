@@ -63,7 +63,7 @@ public class TokenStorageService {
             var key = TOKEN_PREFIX + token;
             var deleted = redisTemplate.delete(key);
             log.debug("Token removal result: {}", deleted);
-            return deleted;
+            return Boolean.TRUE.equals(deleted);
         } catch (Exception e) {
             log.error("Failed to remove token from Redis", e);
             throw new RuntimeException("Failed to remove token from Redis", e);
