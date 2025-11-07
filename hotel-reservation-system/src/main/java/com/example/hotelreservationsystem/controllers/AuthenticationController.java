@@ -70,7 +70,7 @@ public class AuthenticationController {
         }
 
         response.put("message", "Invalid Authorization header");
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/health")
