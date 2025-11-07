@@ -1,7 +1,7 @@
 package com.example.hotelreservationsystem;
 
 import com.example.hotelreservationsystem.base.notification.Notification;
-import com.example.hotelreservationsystem.base.pattern.NotificationServiceFactory;
+import com.example.hotelreservationsystem.base.notification.NotificationServiceFactory;
 import com.example.hotelreservationsystem.enums.NotificationType;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
