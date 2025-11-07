@@ -11,6 +11,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name = "room_type")
 public class RoomType extends BaseEntityAudit {
     @Column
