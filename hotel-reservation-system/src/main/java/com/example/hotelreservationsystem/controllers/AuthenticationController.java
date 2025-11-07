@@ -20,6 +20,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
+    private static final String BEARER_PREFIX = "Bearer ";
+    
     private final AuthenticationService authenticationService;
     private final TokenStorageService tokenStorageService;
 
@@ -57,8 +59,8 @@ public class AuthenticationController {
     public ResponseEntity<Map<String, String>> logout(@RequestHeader(value = "Authorization", required = false) String authHeader) {
         var response = new HashMap<String, String>();
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            var token = authHeader.substring(7);
+        if (authHeader != null && authHeader.startsWith(BEARER_PREFIX)) {
+            var token = authHeader.substring(BEARER_PREFIX.length());
             var removed = tokenStorageService.removeToken(token);
 
             if (removed) {
