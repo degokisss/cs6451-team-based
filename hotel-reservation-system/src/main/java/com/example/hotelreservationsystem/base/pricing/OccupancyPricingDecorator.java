@@ -4,8 +4,8 @@ class OccupancyPricingDecorator extends PricingDecorator {
     private final float occupancy;
 
     public OccupancyPricingDecorator(PricingComponent pricingComponent, float occupancy) {
-        this.occupancy = occupancy;
         super(pricingComponent);
+        this.occupancy = occupancy;
     }
 
     @Override

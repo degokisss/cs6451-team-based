@@ -5,8 +5,8 @@ import com.example.hotelreservationsystem.enums.MembershipTier;
 class MembershipPricingDecorator extends PricingDecorator {
     private final MembershipTier membershipTier;
     public MembershipPricingDecorator(PricingComponent pricingComponent, MembershipTier membershipTier) {
-        this.membershipTier = membershipTier;
         super(pricingComponent);
+        this.membershipTier = membershipTier;
     }
 
     @Override
