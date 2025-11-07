@@ -1,8 +1,5 @@
-package com.example.hotelreservationsystem.base.pattern;
+package com.example.hotelreservationsystem.base.notification;
 
-import com.example.hotelreservationsystem.base.notification.EmailNotification;
-import com.example.hotelreservationsystem.base.notification.Notification;
-import com.example.hotelreservationsystem.base.notification.SMSNotification;
 import com.example.hotelreservationsystem.enums.NotificationType;
 import org.springframework.stereotype.Service;
 
