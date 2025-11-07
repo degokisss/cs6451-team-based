@@ -17,8 +17,8 @@ class MembershipPricingDecorator extends PricingDecorator {
 
     private float memberShipStrategy(MembershipTier membershipTier) {
         return switch (membershipTier) {
-            case MembershipTier.BRONZE -> 0.90f;
-            case MembershipTier.GOLD -> 0.80f;
+            case BRONZE -> 0.90f;
+            case GOLD -> 0.80f;
             default -> 1f;
         };
     }

@@ -8,7 +8,7 @@ class HolidayPricingDecorator extends PricingDecorator {
 
     @Override
     public Float calc() {
-        float rates = 1.5f;
-        return super.calc() * rates;
+        float holidayRate = 1.5f;
+        return super.calc() * holidayRate;
     }
 }

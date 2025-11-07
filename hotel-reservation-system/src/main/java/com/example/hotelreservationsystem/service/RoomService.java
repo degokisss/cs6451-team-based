@@ -46,7 +46,7 @@ public class RoomService {
 
     public void _updatePrice(Long roomType, float price) {
         Float oldPrice = _prices.get(roomType);
-        if (oldPrice == null || oldPrice != price) {
+        if (oldPrice == null || !oldPrice.equals(price)) {
             _prices.put(roomType, price);
             notifyObservers(roomType, price);
         }
