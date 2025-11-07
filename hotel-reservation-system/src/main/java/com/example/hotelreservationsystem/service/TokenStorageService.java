@@ -45,7 +45,7 @@ public class TokenStorageService {
             var key = TOKEN_PREFIX + token;
             var hasKey = redisTemplate.hasKey(key);
             log.debug("Token validation result: {}", hasKey);
-            return hasKey;
+            return Boolean.TRUE.equals(hasKey);
         } catch (Exception e) {
             log.error("Failed to validate token in Redis", e);
             return false;
