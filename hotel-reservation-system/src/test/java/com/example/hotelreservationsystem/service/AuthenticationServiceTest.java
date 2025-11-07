@@ -102,7 +102,7 @@ class AuthenticationServiceTest {
         var response = authenticationService.register(registerRequest);
 
         assertNotNull(response);
-        assertEquals("mock.jwt.token", response.token());
+        assertEquals("Bearer mock.jwt.token", response.token());  // Token is wrapped with "Bearer " prefix
         assertEquals("test@example.com", response.email());
         assertEquals("Test User", response.name());
         verify(customerRepository, times(1)).save(any(Customer.class));
@@ -127,7 +127,7 @@ class AuthenticationServiceTest {
         var response = authenticationService.login(loginRequest);
 
         assertNotNull(response);
-        assertEquals("mock.jwt.token", response.token());
+        assertEquals("Bearer mock.jwt.token", response.token());  // Token is wrapped with "Bearer " prefix
         assertEquals("test@example.com", response.email());
         assertEquals("Test User", response.name());
         verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
@@ -143,9 +143,8 @@ class AuthenticationServiceTest {
     @Test
     void testLogin_UserNotFound() {
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
-        when(customerRepository.findByEmail("test@example.com")).thenReturn(Optional.empty());
 
-        assertThrows(UsernameNotFoundException.class, () -> authenticationService.login(loginRequest));
+        assertThrows(InvalidCredentialsException.class, () -> authenticationService.login(loginRequest));
     }
 
     @Test
