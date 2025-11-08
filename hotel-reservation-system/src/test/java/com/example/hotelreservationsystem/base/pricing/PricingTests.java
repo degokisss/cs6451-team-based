@@ -52,7 +52,7 @@ public class PricingTests {
             var rate = 1f;
             if (occupancy == 0.9f) {
                 rate = 1.4f;
-            } else if(occupancy == 0.8f) {
+            } else if (occupancy == 0.8f) {
                 rate = 1.3f;
             } else if (occupancy == 0.7f) {
                 rate = 1.2f;
