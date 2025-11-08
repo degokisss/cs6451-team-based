@@ -11,11 +11,11 @@ class MembershipPricingDecorator extends PricingDecorator {
 
     @Override
     public Float calc() {
-        var discount = memberShipStrategy(membershipTier);
+        var discount = membershipStrategy(membershipTier);
         return super.calc() * discount;
     }
 
-    private float memberShipStrategy(MembershipTier membershipTier) {
+    private float membershipStrategy(MembershipTier membershipTier) {
         return switch (membershipTier) {
             case BRONZE -> 0.90f;
             case GOLD -> 0.80f;
