@@ -4,29 +4,26 @@ import com.example.hotelreservationsystem.base.pricing.PricingObserver;
 import com.example.hotelreservationsystem.entity.Room;
 import com.example.hotelreservationsystem.enums.RoomStatus;
 import com.example.hotelreservationsystem.repository.RoomRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RoomService {
     private final RoomRepository roomRepository;
 
-    private final Map<Long, List<PricingObserver>> _dependencies = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Long, List<PricingObserver>> _dependencies = new ConcurrentHashMap<>();
+
+    // Long: roomType, Float: price
+    private final ConcurrentHashMap<Long, Float> _prices = new ConcurrentHashMap<>();
 
     public void addObserver(Long roomType, PricingObserver observer) {
         _dependencies.computeIfAbsent(roomType, s -> new ArrayList<>()).add(observer);
     }
-
-    // String: roomType, Float: price
-    private final Map<Long, Float> _prices = new HashMap<>();
 
     public void removeObserver(Long roomType, PricingObserver observer) {
         List<PricingObserver> observers = _dependencies.get(roomType);
@@ -35,7 +32,7 @@ public class RoomService {
         }
     }
 
-    public void notifyObservers(Long roomType, Float price) {
+    public synchronized void notifyObservers(Long roomType, Float price) {
         List<PricingObserver> observers = _dependencies.get(roomType);
         if (observers != null) {
             for (PricingObserver observer : observers) {
