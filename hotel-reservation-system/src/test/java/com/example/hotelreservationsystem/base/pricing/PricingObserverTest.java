@@ -1,7 +1,6 @@
 package com.example.hotelreservationsystem.base.pricing;
 
 import com.example.hotelreservationsystem.service.RoomService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
