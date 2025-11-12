@@ -35,7 +35,7 @@ public class Customer extends BaseEntityAudit implements UserDetails {
 
     @Column(name = "password_hash")
     @JsonIgnore
-    private String passwordHash;
+    private String passwordHash;  // Nullable for OAuth2 users
 
     @Column(name = "membership_tier")
     @Enumerated(EnumType.STRING)
@@ -44,12 +44,20 @@ public class Customer extends BaseEntityAudit implements UserDetails {
     @Column(name = "google_auth_token")
     private String googleAuthToken;
 
+    // OAuth2 specific fields
+    @Column(name = "oauth_provider")
+    private String oauthProvider;  // e.g., "google", "facebook", etc.
+
+    @Column(name = "oauth_provider_id")
+    private String oauthProviderId;  // Unique ID from OAuth provider
+
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Role role = Role.USER;
 
     @Column(name = "enabled")
+    @Builder.Default
     private boolean enabled = true;
 
     // UserDetails implementation
