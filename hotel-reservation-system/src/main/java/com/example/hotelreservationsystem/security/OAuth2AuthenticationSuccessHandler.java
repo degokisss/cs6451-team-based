@@ -1,5 +1,6 @@
 package com.example.hotelreservationsystem.security;
 
+import com.example.hotelreservationsystem.dto.CustomOAuth2User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

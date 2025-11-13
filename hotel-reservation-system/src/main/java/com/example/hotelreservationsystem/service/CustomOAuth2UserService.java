@@ -1,9 +1,10 @@
-package com.example.hotelreservationsystem.security;
+package com.example.hotelreservationsystem.service;
 
 import com.example.hotelreservationsystem.entity.Customer;
 import com.example.hotelreservationsystem.enums.MembershipTier;
 import com.example.hotelreservationsystem.enums.Role;
 import com.example.hotelreservationsystem.repository.CustomerRepository;
+import com.example.hotelreservationsystem.dto.CustomOAuth2User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

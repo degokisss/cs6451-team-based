@@ -1,6 +1,6 @@
 package com.example.hotelreservationsystem.config;
 
-import com.example.hotelreservationsystem.security.CustomOAuth2UserService;
+import com.example.hotelreservationsystem.service.CustomOAuth2UserService;
 import com.example.hotelreservationsystem.security.JwtAuthenticationFilter;
 import com.example.hotelreservationsystem.security.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;

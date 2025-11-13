@@ -1,4 +1,4 @@
-package com.example.hotelreservationsystem.security;
+package com.example.hotelreservationsystem.dto;
 
 import com.example.hotelreservationsystem.entity.Customer;
 import org.springframework.security.core.GrantedAuthority;
