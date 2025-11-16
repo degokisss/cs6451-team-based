@@ -80,7 +80,7 @@ public class AuthenticationService{
         var claims = new HashMap<String, Object>();
         claims.put("role", customer.getRole().name());
         claims.put("name", customer.getName());
-        return String.format("Bearer %s", jwtUtil.generateToken(customer.getEmail(), claims));
+        return jwtUtil.generateToken(customer.getEmail(), claims);
     }
 
     public Customer getCurrentUser(String email) {
