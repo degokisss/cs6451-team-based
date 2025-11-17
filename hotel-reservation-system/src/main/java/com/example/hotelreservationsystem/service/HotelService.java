@@ -39,4 +39,43 @@ public class HotelService {
                                   .address(hotelCreateRequest.getAddress())
                                   .build();
     }
+
+    public Hotel findById(Long id) {
+        return hotelRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public HotelCreateResponse update(Long id, HotelCreateRequest hotelCreateRequest) {
+        var existing = hotelRepository.findById(id);
+        if (existing.isEmpty()) {
+            return null; // controller will translate to 404
+        }
+
+        var hotel = existing.get();
+
+        // if updating name to one that exists on another hotel, prevent it
+        if (!hotel.getName().equals(hotelCreateRequest.getName()) && hotelRepository.existsByName(hotelCreateRequest.getName())) {
+            throw new HotelAlreadyExistsException(hotelCreateRequest.getName());
+        }
+
+        hotel.setName(hotelCreateRequest.getName());
+        hotel.setAddress(hotelCreateRequest.getAddress());
+
+        hotelRepository.save(hotel);
+
+        return HotelCreateResponse.builder()
+                                  .id(hotel.getId())
+                                  .name(hotel.getName())
+                                  .address(hotel.getAddress())
+                                  .build();
+    }
+
+    @Transactional
+    public boolean delete(Long id) {
+        if (!hotelRepository.existsById(id)) {
+            return false;
+        }
+        hotelRepository.deleteById(id);
+        return true;
+    }
 }
