@@ -35,11 +35,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/auth/**", "/hello", "/error", "/actuator/**", "/oauth2/**", "/login/oauth2/**")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated())
+//            .authorizeHttpRequests(auth -> auth
+//                    .requestMatchers("/api/auth/**", "/hello", "/error", "/actuator/**", "/oauth2/**", "/login/oauth2/**")
+//                    .permitAll()
+//                    .anyRequest()
+//                    .authenticated())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .oauth2Login(oauth2 -> oauth2
                     .userInfoEndpoint(userInfo -> userInfo

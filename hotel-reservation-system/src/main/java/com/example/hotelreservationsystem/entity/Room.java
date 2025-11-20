@@ -22,7 +22,7 @@ import lombok.*;
         @Index(name = "idx_hotel_id", columnList = "hotel_id")
     }
 )
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Builder
 @AllArgsConstructor
