@@ -2,6 +2,8 @@ package com.example.hotelreservationsystem.controllers;
 
 import com.example.hotelreservationsystem.dto.RoomCreateRequest;
 import com.example.hotelreservationsystem.dto.RoomCreateResponse;
+import com.example.hotelreservationsystem.dto.RoomPriceUpdateRequest;
+import com.example.hotelreservationsystem.entity.RoomType;
 import com.example.hotelreservationsystem.service.RoomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -98,6 +100,18 @@ public class RoomController {
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
+        }
+    }
+
+    @PutMapping("/price")
+    public ResponseEntity<RoomType> updateRoomTypePrice(@RequestBody @Valid RoomPriceUpdateRequest request) {
+        try {
+            var updatedRoomType = roomService.updatePrice(request.getRoomTypeId(), request.getPrice());
+            if (updatedRoomType == null) return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(updatedRoomType);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseEntity.internalServerError().build();
         }
     }
 
