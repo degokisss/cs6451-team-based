@@ -6,7 +6,7 @@
 Do you think we need to support **Authentication Token Mechanism**
 2. Registration 
 Using username-password to register, make sure hash the password before saving it to database.
-3. Login out
+3. Login out..
 
 ## Module - Booking
 **State Pattern**

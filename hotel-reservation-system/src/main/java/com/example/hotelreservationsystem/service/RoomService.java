@@ -205,10 +205,19 @@ public class RoomService {
         return true;
     }
 
-    public void updatePrice(Long roomTypeId, float price) {
-        _updatePrice(roomTypeId, price);
+    @Transactional
+    public RoomType updatePrice(Long roomTypeId, float price) {
+        var roomTypeOpt = roomTypeRepository.findById(roomTypeId);
+        if (roomTypeOpt.isEmpty()) {
+            return null;
+        }
 
-        // todo update db
+        var roomType = roomTypeOpt.get();
+        roomType.setPrice(price);
+        roomTypeRepository.save(roomType);
+
+        _updatePrice(roomTypeId, price);
+        return roomType;
     }
 
 }
