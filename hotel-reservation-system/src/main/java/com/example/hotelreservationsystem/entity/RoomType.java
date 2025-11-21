@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Getter
 @Setter
@@ -14,6 +15,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @Table(name = "room_type")
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 public class RoomType extends BaseEntityAudit {
     @Column
     private String name;

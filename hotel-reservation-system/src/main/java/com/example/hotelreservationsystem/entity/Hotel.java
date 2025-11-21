@@ -17,6 +17,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @NoArgsConstructor
+@Builder(toBuilder = true)
+@AllArgsConstructor
 public class Hotel extends BaseEntityAudit {
     @Column
     private String name;
