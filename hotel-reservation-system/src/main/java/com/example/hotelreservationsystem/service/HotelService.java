@@ -110,6 +110,13 @@ public class HotelService {
                                  .orderId(orderId)
                                  .status("INVALID_CHECKIN_CODE")
                                  .build();
+        } else if (order.get().getCheckInDate().isBefore(java.time.LocalDate.now().plusDays(1)) ||
+                   order.get().getCheckOutDate().isAfter(java.time.LocalDate.now().minusDays(1))) {
+            // check-in date is not today
+            return CheckInResponse.builder()
+                                 .orderId(orderId)
+                                 .status("INVALID_CHECKIN_DATE")
+                                 .build();
         } else {
             // valid
             // update the status
@@ -148,6 +155,14 @@ public class HotelService {
         if (order.isEmpty()) {
             return CheckoutResponse.builder()
                     .status("ORDER_NOT_FOUND")
+                    .build();
+        } else if (order.get().getOrderStatus() != OrderStatus.CONFIRMED) {
+            return CheckoutResponse.builder()
+                    .status("INVALID_ORDER_STATUS")
+                    .build();
+        } else if (order.get().getCheckOutDate().isBefore(java.time.LocalDate.now().minusDays(1))) {
+            return CheckoutResponse.builder()
+                    .status("INVALID_CHECKOUT_DATE")
                     .build();
         } else {
             // update the status
