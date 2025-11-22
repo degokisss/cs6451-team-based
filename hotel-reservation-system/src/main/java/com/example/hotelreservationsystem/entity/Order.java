@@ -59,6 +59,12 @@ public class Order extends BaseEntityAudit implements PricingObserver {
     @Column(name = "check_in_code", unique = true, length = 8)
     private String checkInCode;
 
+    @Column(name = "cancelled_at")
+    private java.time.LocalDateTime cancelledAt;
+
+    @Column(name = "cancellation_reason", length = 500)
+    private String cancellationReason;
+
     /**
      * Observer Pattern implementation
      * Called when room price changes to update order's total price

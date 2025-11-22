@@ -2,6 +2,8 @@ package com.example.hotelreservationsystem.controllers;
 
 import com.example.hotelreservationsystem.dto.BookingCreateRequest;
 import com.example.hotelreservationsystem.dto.BookingResponse;
+import com.example.hotelreservationsystem.dto.CancellationRequest;
+import com.example.hotelreservationsystem.dto.CancellationResponse;
 import com.example.hotelreservationsystem.entity.Customer;
 import com.example.hotelreservationsystem.service.AuthenticationService;
 import com.example.hotelreservationsystem.service.BookingService;
@@ -78,6 +80,67 @@ public class BookingController {
             log.error("Failed to create booking", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Failed to create booking");
+        }
+    }
+
+    /**
+     * Cancel a booking order
+     * DELETE /api/bookings/{orderId}
+     * Requires authentication - customerId is extracted from JWT token
+     *
+     * @param orderId The order ID to cancel
+     * @param request Optional cancellation request with reason
+     * @return CancellationResponse with cancellation details
+     */
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<?> cancelBooking(
+        @PathVariable Long orderId,
+        @RequestBody(required = false) @Valid CancellationRequest request) {
+
+        try {
+            // Extract customer from JWT token
+            var authentication = SecurityContextHolder.getContext().getAuthentication();
+            var email = authentication.getName();
+            Customer customer = authenticationService.getCurrentUser(email);
+            Long authenticatedCustomerId = customer.getId();
+
+            log.info("Cancelling booking {} for customer {}", orderId, authenticatedCustomerId);
+
+            // Extract cancellation reason if provided
+            String cancellationReason = (request != null && request.getReason() != null)
+                ? request.getReason()
+                : null;
+
+            CancellationResponse response = bookingService.cancelBooking(
+                orderId,
+                authenticatedCustomerId,
+                cancellationReason
+            );
+
+            return ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException e) {
+            // Order not found
+            log.warn("Order not found for cancellation: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(e.getMessage());
+
+        } catch (SecurityException e) {
+            // Unauthorized - customer doesn't own the order
+            log.warn("Unauthorized cancellation attempt: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(e.getMessage());
+
+        } catch (IllegalStateException e) {
+            // Invalid status - order is COMPLETED or already CANCELLED
+            log.warn("Invalid order status for cancellation: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+
+        } catch (Exception e) {
+            log.error("Failed to cancel booking", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Failed to cancel booking");
         }
     }
 }

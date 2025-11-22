@@ -5,6 +5,7 @@ import com.example.hotelreservationsystem.base.notification.NotificationServiceF
 import com.example.hotelreservationsystem.base.pricing.OrderPriceObserver;
 import com.example.hotelreservationsystem.dto.BookingCreateRequest;
 import com.example.hotelreservationsystem.dto.BookingResponse;
+import com.example.hotelreservationsystem.dto.CancellationResponse;
 import com.example.hotelreservationsystem.entity.Customer;
 import com.example.hotelreservationsystem.entity.Order;
 import com.example.hotelreservationsystem.entity.Room;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Random;
@@ -259,6 +261,181 @@ public class BookingService {
             room.getRoomNumber(),
             order.getCheckInDate(),
             order.getCheckInCode()
+        );
+    }
+
+    /**
+     * Cancel a booking order
+     *
+     * @param orderId Order ID to cancel
+     * @param customerId Customer ID requesting cancellation
+     * @param cancellationReason Optional reason for cancellation
+     * @return CancellationResponse with cancellation details
+     * @throws IllegalArgumentException if order not found
+     * @throws SecurityException if customer doesn't own the order
+     * @throws IllegalStateException if order cannot be cancelled (already CANCELLED or COMPLETED)
+     */
+    @Transactional
+    public CancellationResponse cancelBooking(Long orderId, Long customerId, String cancellationReason) {
+        log.info("Cancelling booking order: {} for customer: {}", orderId, customerId);
+
+        // Step 1: Validate order exists
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> {
+                log.warn("Order not found: {}", orderId);
+                return new IllegalArgumentException("Order not found with ID: " + orderId);
+            });
+
+        // Step 2: Validate order belongs to customer
+        if (!order.getCustomer().getId().equals(customerId)) {
+            log.warn("Customer {} attempted to cancel order {} owned by customer {}",
+                customerId, orderId, order.getCustomer().getId());
+            throw new SecurityException("You are not authorized to cancel this order");
+        }
+
+        // Step 3: Validate order status is cancellable (PENDING or CONFIRMED only)
+        OrderStatus currentStatus = order.getOrderStatus();
+        if (currentStatus == OrderStatus.CANCELLED) {
+            log.warn("Order {} is already cancelled", orderId);
+            throw new IllegalStateException("Order is already cancelled");
+        }
+        if (currentStatus == OrderStatus.COMPLETED) {
+            log.warn("Order {} cannot be cancelled - already completed", orderId);
+            throw new IllegalStateException("Cannot cancel completed order");
+        }
+
+        // Step 4: Update order status to CANCELLED
+        OrderStatus previousStatus = order.getOrderStatus();
+        order.setOrderStatus(OrderStatus.CANCELLED);
+        log.info("Order {} status changed: {} → CANCELLED", orderId, previousStatus);
+
+        // Step 5: Set cancellation timestamp
+        LocalDateTime cancelledAt = LocalDateTime.now();
+        order.setCancelledAt(cancelledAt);
+
+        // Step 6: Store cancellation reason if provided
+        if (cancellationReason != null && !cancellationReason.trim().isEmpty()) {
+            order.setCancellationReason(cancellationReason);
+            log.info("Cancellation reason recorded for order {}: {}", orderId, cancellationReason);
+        }
+
+        // Step 7: Save updated order
+        Order cancelledOrder = orderRepository.save(order);
+        log.info("Order {} cancelled successfully at {}", orderId, cancelledAt);
+
+        // Step 8: Unregister order from price observers (Observer Pattern cleanup)
+        try {
+            Long roomTypeId = order.getRoom().getRoomType().getId();
+            roomService.removeObserver(roomTypeId, cancelledOrder);
+            log.info("Unregistered Order {} from price observer for RoomType ID: {}", orderId, roomTypeId);
+        } catch (Exception e) {
+            log.warn("Failed to unregister order {} from price observer: {}", orderId, e.getMessage());
+            // Don't fail cancellation if observer cleanup fails
+        }
+
+        // Step 9: Send cancellation notification to customer
+        sendCancellationNotifications(order.getCustomer(), cancelledOrder);
+
+        // Step 10: Return cancellation response
+        return CancellationResponse.builder()
+            .orderId(cancelledOrder.getId())
+            .previousStatus(previousStatus)
+            .cancelledAt(cancelledAt)
+            .cancellationReason(cancellationReason)
+            .message("Booking cancelled successfully")
+            .build();
+    }
+
+    /**
+     * Send cancellation notifications via Email and SMS
+     *
+     * @param customer Customer to notify
+     * @param order Cancelled order details
+     */
+    private void sendCancellationNotifications(Customer customer, Order order) {
+        try {
+            // Send Email notification
+            Notification<SimpleMailMessage> emailService = notificationServiceFactory.createNotificationService(NotificationType.EMAIL);
+            SimpleMailMessage emailMessage = createCancellationEmail(customer, order);
+            boolean emailSent = emailService.sendNotification(emailMessage);
+
+            if (emailSent) {
+                log.info("Cancellation email sent to {} for order {}", customer.getEmail(), order.getId());
+            } else {
+                log.warn("Failed to send cancellation email to {} for order {}", customer.getEmail(), order.getId());
+            }
+
+            // Send SMS notification
+            Notification<String> smsService = notificationServiceFactory.createNotificationService(NotificationType.SMS);
+            String smsMessage = createCancellationSMS(order);
+            boolean smsSent = smsService.sendNotification(smsMessage);
+
+            if (smsSent) {
+                log.info("Cancellation SMS sent to {} for order {}", customer.getPhoneNumber(), order.getId());
+            } else {
+                log.warn("Failed to send cancellation SMS to {} for order {}", customer.getPhoneNumber(), order.getId());
+            }
+
+        } catch (Exception e) {
+            log.error("Error sending cancellation notifications for order {}: {}", order.getId(), e.getMessage(), e);
+            // Don't throw exception - notification failure should not block cancellation
+        }
+    }
+
+    /**
+     * Create email message for cancellation confirmation
+     */
+    private SimpleMailMessage createCancellationEmail(Customer customer, Order order) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(customer.getEmail());
+        message.setSubject("Booking Cancelled - Order #" + order.getId());
+
+        String emailBody = String.format("""
+            Dear %s,
+
+            Your booking has been cancelled.
+
+            Cancellation Details:
+            - Order ID: %d
+            - Room: %s
+            - Original Check-in Date: %s
+            - Original Check-out Date: %s
+            - Total Price: $%.2f
+            - Cancelled At: %s
+            %s
+
+            According to our cancellation policy, refunds will be processed within 5-7 business days.
+
+            If you did not request this cancellation, please contact us immediately.
+
+            Thank you for your understanding.
+
+            Best regards,
+            Hotel Reservation System
+            """,
+            customer.getName(),
+            order.getId(),
+            order.getRoom().getRoomNumber() + " - " + order.getRoom().getRoomType().getName(),
+            order.getCheckInDate(),
+            order.getCheckOutDate(),
+            order.getTotalPrice(),
+            order.getCancelledAt(),
+            order.getCancellationReason() != null ? "- Reason: " + order.getCancellationReason() : ""
+        );
+
+        message.setText(emailBody);
+        return message;
+    }
+
+    /**
+     * Create SMS message for cancellation confirmation
+     */
+    private String createCancellationSMS(Order order) {
+        return String.format(
+            "Booking Cancelled - Order #%d | Room: %s | Cancelled at: %s | Refund will be processed in 5-7 business days.",
+            order.getId(),
+            order.getRoom().getRoomNumber(),
+            order.getCancelledAt()
         );
     }
 }

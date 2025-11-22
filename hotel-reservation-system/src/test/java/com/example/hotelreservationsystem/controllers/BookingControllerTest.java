@@ -2,6 +2,8 @@ package com.example.hotelreservationsystem.controllers;
 
 import com.example.hotelreservationsystem.dto.BookingCreateRequest;
 import com.example.hotelreservationsystem.dto.BookingResponse;
+import com.example.hotelreservationsystem.dto.CancellationRequest;
+import com.example.hotelreservationsystem.dto.CancellationResponse;
 import com.example.hotelreservationsystem.entity.Customer;
 import com.example.hotelreservationsystem.enums.OrderStatus;
 import com.example.hotelreservationsystem.service.AuthenticationService;
@@ -21,10 +23,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -243,5 +245,158 @@ class BookingControllerTest {
             .createdAt(LocalDateTime.now())
             .checkInCode("ABCD1234")
             .build();
+    }
+
+    // ============================================
+    // Cancellation Tests
+    // ============================================
+
+    @Test
+    @WithMockUser(username = "user@test.com")
+    void shouldCancelBookingSuccessfully() throws Exception {
+        // Given
+        Long orderId = 1L;
+        var cancellationRequest = CancellationRequest.builder()
+            .reason("Plans changed")
+            .build();
+
+        var cancellationResponse = CancellationResponse.builder()
+            .orderId(orderId)
+            .previousStatus(OrderStatus.CONFIRMED)
+            .cancelledAt(LocalDateTime.now())
+            .cancellationReason("Plans changed")
+            .message("Booking cancelled successfully")
+            .build();
+
+        when(bookingService.cancelBooking(eq(orderId), eq(TEST_CUSTOMER_ID), eq("Plans changed")))
+            .thenReturn(cancellationResponse);
+
+        // When / Then
+        mockMvc.perform(delete("/api/bookings/{orderId}", orderId)
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(cancellationRequest)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.orderId").value(orderId))
+            .andExpect(jsonPath("$.previousStatus").value("CONFIRMED"))
+            .andExpect(jsonPath("$.cancelledAt").exists())
+            .andExpect(jsonPath("$.cancellationReason").value("Plans changed"))
+            .andExpect(jsonPath("$.message").value("Booking cancelled successfully"));
+    }
+
+    @Test
+    @WithMockUser(username = "user@test.com")
+    void shouldCancelBookingWithoutReason() throws Exception {
+        // Given
+        Long orderId = 1L;
+
+        var cancellationResponse = CancellationResponse.builder()
+            .orderId(orderId)
+            .previousStatus(OrderStatus.PENDING)
+            .cancelledAt(LocalDateTime.now())
+            .cancellationReason(null)
+            .message("Booking cancelled successfully")
+            .build();
+
+        when(bookingService.cancelBooking(eq(orderId), eq(TEST_CUSTOMER_ID), isNull()))
+            .thenReturn(cancellationResponse);
+
+        // When / Then - No request body (reason is optional)
+        mockMvc.perform(delete("/api/bookings/{orderId}", orderId)
+                .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.orderId").value(orderId))
+            .andExpect(jsonPath("$.previousStatus").value("PENDING"));
+    }
+
+    @Test
+    @WithMockUser(username = "user@test.com")
+    void shouldReturn404WhenOrderNotFoundForCancellation() throws Exception {
+        // Given
+        Long orderId = 999L;
+
+        when(bookingService.cancelBooking(eq(orderId), eq(TEST_CUSTOMER_ID), any()))
+            .thenThrow(new IllegalArgumentException("Order not found with ID: " + orderId));
+
+        // When / Then
+        mockMvc.perform(delete("/api/bookings/{orderId}", orderId)
+                .with(csrf()))
+            .andExpect(status().isNotFound())
+            .andExpect(content().string("Order not found with ID: " + orderId));
+    }
+
+    @Test
+    @WithMockUser(username = "user@test.com")
+    void shouldReturn403WhenCancellingOtherUsersOrder() throws Exception {
+        // Given
+        Long orderId = 1L;
+
+        when(bookingService.cancelBooking(eq(orderId), eq(TEST_CUSTOMER_ID), any()))
+            .thenThrow(new SecurityException("You are not authorized to cancel this order"));
+
+        // When / Then
+        mockMvc.perform(delete("/api/bookings/{orderId}", orderId)
+                .with(csrf()))
+            .andExpect(status().isForbidden())
+            .andExpect(content().string("You are not authorized to cancel this order"));
+    }
+
+    @Test
+    @WithMockUser(username = "user@test.com")
+    void shouldReturn400WhenCancellingCompletedOrder() throws Exception {
+        // Given
+        Long orderId = 1L;
+
+        when(bookingService.cancelBooking(eq(orderId), eq(TEST_CUSTOMER_ID), any()))
+            .thenThrow(new IllegalStateException("Cannot cancel completed order"));
+
+        // When / Then
+        mockMvc.perform(delete("/api/bookings/{orderId}", orderId)
+                .with(csrf()))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().string("Cannot cancel completed order"));
+    }
+
+    @Test
+    @WithMockUser(username = "user@test.com")
+    void shouldReturn400WhenCancellingAlreadyCancelledOrder() throws Exception {
+        // Given
+        Long orderId = 1L;
+
+        when(bookingService.cancelBooking(eq(orderId), eq(TEST_CUSTOMER_ID), any()))
+            .thenThrow(new IllegalStateException("Order is already cancelled"));
+
+        // When / Then
+        mockMvc.perform(delete("/api/bookings/{orderId}", orderId)
+                .with(csrf()))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().string("Order is already cancelled"));
+    }
+
+    @Test
+    void shouldRequireAuthenticationForCancellation() throws Exception {
+        // Given - No authentication
+        Long orderId = 1L;
+
+        // When / Then
+        mockMvc.perform(delete("/api/bookings/{orderId}", orderId)
+                .with(csrf()))
+            .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(username = "user@test.com")
+    void shouldReturn500OnUnexpectedCancellationError() throws Exception {
+        // Given
+        Long orderId = 1L;
+
+        when(bookingService.cancelBooking(eq(orderId), eq(TEST_CUSTOMER_ID), any()))
+            .thenThrow(new RuntimeException("Database connection failed"));
+
+        // When / Then
+        mockMvc.perform(delete("/api/bookings/{orderId}", orderId)
+                .with(csrf()))
+            .andExpect(status().isInternalServerError())
+            .andExpect(content().string("Failed to cancel booking"));
     }
 }

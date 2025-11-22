@@ -4,6 +4,7 @@ import com.example.hotelreservationsystem.base.notification.Notification;
 import com.example.hotelreservationsystem.base.notification.NotificationServiceFactory;
 import com.example.hotelreservationsystem.dto.BookingCreateRequest;
 import com.example.hotelreservationsystem.dto.BookingResponse;
+import com.example.hotelreservationsystem.dto.CancellationResponse;
 import com.example.hotelreservationsystem.entity.Customer;
 import com.example.hotelreservationsystem.entity.Order;
 import com.example.hotelreservationsystem.entity.Room;
@@ -441,5 +442,195 @@ class BookingServiceTest {
         order.setId(1L);
         order.setCreatedAt(LocalDateTime.now());
         return order;
+    }
+
+    // ============================================
+    // Cancellation Tests
+    // ============================================
+
+    @Test
+    void shouldCancelPendingOrder() {
+        // Given
+        Order order = createTestOrder();
+        order.setOrderStatus(OrderStatus.PENDING);
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // When
+        CancellationResponse response = bookingService.cancelBooking(1L, TEST_CUSTOMER_ID, "Change of plans");
+
+        // Then
+        assertNotNull(response);
+        assertEquals(1L, response.getOrderId());
+        assertEquals(OrderStatus.PENDING, response.getPreviousStatus());
+        assertNotNull(response.getCancelledAt());
+        assertEquals("Change of plans", response.getCancellationReason());
+        assertEquals("Booking cancelled successfully", response.getMessage());
+
+        assertEquals(OrderStatus.CANCELLED, order.getOrderStatus());
+        assertNotNull(order.getCancelledAt());
+        assertEquals("Change of plans", order.getCancellationReason());
+
+        verify(orderRepository).save(order);
+        verify(roomService).removeObserver(any(), any());
+    }
+
+    @Test
+    void shouldCancelConfirmedOrder() {
+        // Given
+        Order order = createTestOrder();
+        order.setOrderStatus(OrderStatus.CONFIRMED);
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // When
+        CancellationResponse response = bookingService.cancelBooking(1L, TEST_CUSTOMER_ID, null);
+
+        // Then
+        assertNotNull(response);
+        assertEquals(OrderStatus.CONFIRMED, response.getPreviousStatus());
+        assertEquals(OrderStatus.CANCELLED, order.getOrderStatus());
+        assertNotNull(order.getCancelledAt());
+        assertNull(order.getCancellationReason());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCancellingCompletedOrder() {
+        // Given
+        Order order = createTestOrder();
+        order.setOrderStatus(OrderStatus.COMPLETED);
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        // When / Then
+        var exception = assertThrows(IllegalStateException.class, () ->
+            bookingService.cancelBooking(1L, TEST_CUSTOMER_ID, "Test")
+        );
+
+        assertEquals("Cannot cancel completed order", exception.getMessage());
+        verify(orderRepository, never()).save(any());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCancellingAlreadyCancelledOrder() {
+        // Given
+        Order order = createTestOrder();
+        order.setOrderStatus(OrderStatus.CANCELLED);
+        order.setCancelledAt(LocalDateTime.now().minusDays(1));
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        // When / Then
+        var exception = assertThrows(IllegalStateException.class, () ->
+            bookingService.cancelBooking(1L, TEST_CUSTOMER_ID, "Test")
+        );
+
+        assertEquals("Order is already cancelled", exception.getMessage());
+        verify(orderRepository, never()).save(any());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenOrderNotFound() {
+        // Given
+        when(orderRepository.findById(999L)).thenReturn(Optional.empty());
+
+        // When / Then
+        var exception = assertThrows(IllegalArgumentException.class, () ->
+            bookingService.cancelBooking(999L, TEST_CUSTOMER_ID, "Test")
+        );
+
+        assertTrue(exception.getMessage().contains("Order not found"));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCustomerDoesNotOwnOrder() {
+        // Given
+        Order order = createTestOrder();
+        Long wrongCustomerId = 999L;
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        // When / Then
+        var exception = assertThrows(SecurityException.class, () ->
+            bookingService.cancelBooking(1L, wrongCustomerId, "Test")
+        );
+
+        assertTrue(exception.getMessage().contains("not authorized"));
+        verify(orderRepository, never()).save(any());
+    }
+
+    @Test
+    void shouldSendCancellationNotifications() {
+        // Given
+        Order order = createTestOrder();
+        order.setOrderStatus(OrderStatus.CONFIRMED);
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(emailNotification.sendNotification(any(SimpleMailMessage.class))).thenReturn(true);
+        when(smsNotification.sendNotification(anyString())).thenReturn(true);
+
+        // When
+        bookingService.cancelBooking(1L, TEST_CUSTOMER_ID, "Changed plans");
+
+        // Then
+        verify(emailNotification).sendNotification(any(SimpleMailMessage.class));
+        verify(smsNotification).sendNotification(anyString());
+    }
+
+    @Test
+    void shouldNotFailCancellationWhenNotificationFails() throws Exception {
+        // Given
+        Order order = createTestOrder();
+        order.setOrderStatus(OrderStatus.CONFIRMED);
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(notificationServiceFactory.createNotificationService(any())).thenThrow(new RuntimeException("Notification service down"));
+
+        // When
+        CancellationResponse response = bookingService.cancelBooking(1L, TEST_CUSTOMER_ID, "Test");
+
+        // Then - Cancellation should succeed despite notification failure
+        assertNotNull(response);
+        assertEquals(OrderStatus.CANCELLED, order.getOrderStatus());
+        verify(orderRepository).save(order);
+    }
+
+    @Test
+    void shouldUnregisterOrderFromPriceObserver() {
+        // Given
+        Order order = createTestOrder();
+        order.setOrderStatus(OrderStatus.CONFIRMED);
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // When
+        bookingService.cancelBooking(1L, TEST_CUSTOMER_ID, null);
+
+        // Then
+        Long roomTypeId = order.getRoom().getRoomType().getId();
+        verify(roomService).removeObserver(eq(roomTypeId), any(Order.class));
+    }
+
+    @Test
+    void shouldNotFailCancellationWhenObserverCleanupFails() {
+        // Given
+        Order order = createTestOrder();
+        order.setOrderStatus(OrderStatus.CONFIRMED);
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        doThrow(new RuntimeException("Observer cleanup failed")).when(roomService).removeObserver(any(), any());
+
+        // When
+        CancellationResponse response = bookingService.cancelBooking(1L, TEST_CUSTOMER_ID, "Test");
+
+        // Then - Cancellation should succeed despite observer cleanup failure
+        assertNotNull(response);
+        assertEquals(OrderStatus.CANCELLED, order.getOrderStatus());
     }
 }
