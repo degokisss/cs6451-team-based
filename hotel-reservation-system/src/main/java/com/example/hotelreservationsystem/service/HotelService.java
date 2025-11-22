@@ -1,20 +1,33 @@
 package com.example.hotelreservationsystem.service;
 
+import com.example.hotelreservationsystem.base.notification.NotificationServiceFactory;
+import com.example.hotelreservationsystem.dto.CheckInResponse;
+import com.example.hotelreservationsystem.dto.CheckoutResponse;
 import com.example.hotelreservationsystem.dto.HotelCreateRequest;
 import com.example.hotelreservationsystem.dto.HotelCreateResponse;
 import com.example.hotelreservationsystem.entity.Hotel;
+import com.example.hotelreservationsystem.entity.Order;
+import com.example.hotelreservationsystem.enums.NotificationType;
+import com.example.hotelreservationsystem.enums.OrderStatus;
 import com.example.hotelreservationsystem.exception.HotelAlreadyExistsException;
 import com.example.hotelreservationsystem.repository.HotelRepository;
+import com.example.hotelreservationsystem.repository.OrderRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class HotelService {
     private final HotelRepository hotelRepository;
+    private final OrderRepository orderRepository;
+    private final NotificationServiceFactory notificationServiceFactory;
 
     public List<Hotel> findAll() {
         return hotelRepository.findAll();
@@ -77,5 +90,90 @@ public class HotelService {
         }
         hotelRepository.deleteById(id);
         return true;
+    }
+
+    // check-in logic
+    // validate the check-in code
+    // update the order status
+    // send notification
+    public CheckInResponse checkIn(Long orderId, String checkInCode) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isEmpty()) {
+            // order not found
+            return CheckInResponse.builder()
+                                 .orderId(orderId)
+                                 .status("ORDER_NOT_FOUND")
+                                 .build();
+        } else if (!order.get().getCheckInCode().equals(checkInCode)) {
+            // invalid check-in code
+            return CheckInResponse.builder()
+                                 .orderId(orderId)
+                                 .status("INVALID_CHECKIN_CODE")
+                                 .build();
+        } else {
+            // valid
+            // update the status
+            order.get().setOrderStatus(OrderStatus.CONFIRMED);
+            orderRepository.save(order.get());
+
+            // send notification
+            try {
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setTo(order.get().getCustomer().getEmail());
+                message.setSubject("Check-in confirmation");
+                message.setText("Check-in successful for order ID: " + orderId);
+                notificationServiceFactory.createNotificationService(NotificationType.EMAIL)
+                        .sendNotification(message);
+            } catch (Exception e) {
+                // log the error but do not fail the check-in process
+                log.error(e.getMessage());
+            }
+
+            // return success
+            return CheckInResponse.builder()
+                                 .orderId(orderId)
+                                 .status("CHECKIN_SUCCESS")
+                                 .build();
+
+        }
+    }
+
+    // check-out logic
+    // update the order status
+    // send notification
+    public CheckoutResponse checkOut(Long roomId) {
+        // update the order status
+        // and send a notification
+        Optional<Order> order = orderRepository.findByRoomId(roomId);
+        if (order.isEmpty()) {
+            return CheckoutResponse.builder()
+                    .status("ORDER_NOT_FOUND")
+                    .build();
+        } else {
+            // update the status
+            order.get().setOrderStatus(OrderStatus.COMPLETED);
+            orderRepository.save(order.get());
+
+            // send notification
+            try {
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setTo(order.get().getCustomer().getEmail());
+                message.setSubject("Check-out confirmation");
+                message.setText("Check-out successful for order ID: " + order.get().getId());
+                notificationServiceFactory.createNotificationService(NotificationType.EMAIL)
+                        .sendNotification(message);
+            } catch (Exception e) {
+                // log the error but do not fail the check-out process
+                log.error(e.getMessage());
+            }
+
+            return CheckoutResponse.builder()
+                    .status("CHECKOUT_SUCCESS")
+                    .build();
+        }
+    }
+
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
     }
 }

@@ -1,13 +1,11 @@
 package com.example.hotelreservationsystem.controllers;
 
-import com.example.hotelreservationsystem.dto.HotelCreateRequest;
-import com.example.hotelreservationsystem.dto.HotelCreateResponse;
-import com.example.hotelreservationsystem.dto.RoomCreateRequest;
-import com.example.hotelreservationsystem.dto.RoomCreateResponse;
-import com.example.hotelreservationsystem.dto.RoomForHotelCreateRequest;
+import com.example.hotelreservationsystem.dto.*;
 import com.example.hotelreservationsystem.entity.Hotel;
+import com.example.hotelreservationsystem.entity.Order;
 import com.example.hotelreservationsystem.service.HotelService;
 import com.example.hotelreservationsystem.service.RoomService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/api/hotel")
 public class HotelController {
 
@@ -98,5 +97,48 @@ public class HotelController {
             log.error(e.getMessage());
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    @PostMapping("checkin")
+    public ResponseEntity<CheckInResponse> checkIn(CheckInRequest checkInRequest) {
+        try {
+            CheckInResponse response = hotelService.checkIn(checkInRequest.orderId(), checkInRequest.checkInCode());
+            if (response == null) {
+                return ResponseEntity.badRequest().build();
+            } else {
+                return ResponseEntity.ok(response);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
+    @PostMapping("checkout")
+    public ResponseEntity<CheckoutResponse> checkOut(CheckoutRequest request) {
+        try {
+            CheckoutResponse response = hotelService.checkOut(request.roomId());
+            if (response == null) {
+                return ResponseEntity.badRequest().build();
+            } else {
+                return ResponseEntity.ok(response);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("orders")
+    public ResponseEntity<List<Order>> getAllOrders() {
+        try {
+            List<Order> orders = hotelService.getAllOrders();
+            return ResponseEntity.ok(orders);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+
     }
 }
