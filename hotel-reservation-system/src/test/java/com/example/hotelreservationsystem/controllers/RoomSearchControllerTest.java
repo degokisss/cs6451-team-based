@@ -46,7 +46,7 @@ class RoomSearchControllerTest {
         when(roomSearchService.searchAvailableRooms(any(), any(), any(), any()))
             .thenReturn(List.of(room1, room2));
 
-        mockMvc.perform(get("/api/rooms/search")
+        mockMvc.perform(get("/api/customer/rooms/search")
                 .param("roomTypeId", "1")
                 .param("hotelId", "1"))
             .andExpect(status().isOk())
@@ -61,7 +61,7 @@ class RoomSearchControllerTest {
         when(roomSearchService.searchAvailableRooms(any(), any(), any(), any()))
             .thenReturn(List.of());
 
-        mockMvc.perform(get("/api/rooms/search")
+        mockMvc.perform(get("/api/customer/rooms/search")
                 .param("checkInDate", "2025-12-01")
                 .param("checkOutDate", "2025-12-05")
                 .param("roomTypeId", "1"))
@@ -75,7 +75,7 @@ class RoomSearchControllerTest {
         when(roomSearchService.searchAvailableRooms(any(), any(), any(), any()))
             .thenReturn(List.of());
 
-        mockMvc.perform(get("/api/rooms/search"))
+        mockMvc.perform(get("/api/customer/rooms/search"))
             .andExpect(status().isOk());
     }
 
@@ -85,7 +85,7 @@ class RoomSearchControllerTest {
         when(roomSearchService.searchAvailableRooms(any(), any(), any(), any()))
             .thenReturn(List.of());
 
-        mockMvc.perform(get("/api/rooms/search")
+        mockMvc.perform(get("/api/customer/rooms/search")
                 .param("roomTypeId", "999"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.length()").value(0));
