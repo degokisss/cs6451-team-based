@@ -8,7 +8,7 @@
 - Finished the business logic
 
 ### dynamic price observation(Tan)
-- The Order should observe the dynamic price, and update the order
+- The Order should observe the dynamic price, and update the order (Done)
 
 ### Module - Check-in/Check-out(Zander)
 
