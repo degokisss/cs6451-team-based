@@ -20,27 +20,37 @@ public class RoomSearchController {
     private final RoomSearchService roomSearchService;
 
     /**
-     * Search for available rooms
-     * GET /api/rooms/search
+     * Search for available rooms with observer pattern support
+     * GET /api/customer/rooms/search
      *
      * @param checkInDate  Check-in date (optional, for future date-based booking)
      * @param checkOutDate Check-out date (optional, for future date-based booking)
      * @param roomTypeId   Room type filter (optional)
      * @param hotelId      Hotel filter (optional)
+     * @param customerId   Customer ID for tracking and notifications (optional)
      * @return List of available rooms excluding locked rooms
+     * <p>
+     * Note: Including customerId enables:
+     * - Notification when locked rooms matching search criteria become available
+     * - Analytics on search-to-booking conversion
+     * - Personalized search experience
      */
     @GetMapping("/search")
     public ResponseEntity<List<Room>> searchRooms(
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
         @RequestParam(required = false) Long roomTypeId,
-        @RequestParam(required = false) Long hotelId
+        @RequestParam(required = false) Long hotelId,
+        @RequestParam(required = false) Long customerId
     ) {
         try {
-            log.info("Room search request - checkIn: {}, checkOut: {}, roomTypeId: {}, hotelId: {}",
-                checkInDate, checkOutDate, roomTypeId, hotelId);
+            log.info("Room search request - checkIn: {}, checkOut: {}, roomTypeId: {}, hotelId: {}, customerId: {}",
+                checkInDate, checkOutDate, roomTypeId, hotelId, customerId);
 
-            var rooms = roomSearchService.searchAvailableRooms(checkInDate, checkOutDate, roomTypeId, hotelId);
+            // Pass customerId to service for observer pattern tracking
+            var rooms = roomSearchService.searchAvailableRooms(
+                checkInDate, checkOutDate, roomTypeId, hotelId, customerId
+            );
 
             return ResponseEntity.ok(rooms);
 
