@@ -100,7 +100,7 @@ public class HotelController {
     }
 
     @PostMapping("checkin")
-    public ResponseEntity<CheckInResponse> checkIn(CheckInRequest checkInRequest) {
+    public ResponseEntity<CheckInResponse> checkIn(@RequestBody CheckInRequest checkInRequest) {
         try {
             CheckInResponse response = hotelService.checkIn(checkInRequest.orderId(), checkInRequest.checkInCode());
             if (response == null) {
@@ -116,7 +116,7 @@ public class HotelController {
 
 
     @PostMapping("checkout")
-    public ResponseEntity<CheckoutResponse> checkOut(CheckoutRequest request) {
+    public ResponseEntity<CheckoutResponse> checkOut(@RequestBody CheckoutRequest request) {
         try {
             CheckoutResponse response = hotelService.checkOut(request.roomId());
             if (response == null) {
