@@ -14,6 +14,7 @@ import com.example.hotelreservationsystem.enums.OrderStatus;
 import com.example.hotelreservationsystem.repository.CustomerRepository;
 import com.example.hotelreservationsystem.repository.OrderRepository;
 import com.example.hotelreservationsystem.repository.RoomRepository;
+import com.example.hotelreservationsystem.service.state.ReservationContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
@@ -118,7 +119,7 @@ public class BookingService {
         log.info("Created order {} with PENDING status and check-in code {}", savedOrder.getId(), checkInCode);
 
         // Step 8: Transition to CONFIRMED status (auto-confirm for now)
-        savedOrder.setOrderStatus(OrderStatus.CONFIRMED);
+        new ReservationContext(savedOrder).confirm();
         savedOrder = orderRepository.save(savedOrder);
         log.info("Order {} transitioned to CONFIRMED", savedOrder.getId());
 
@@ -306,7 +307,7 @@ public class BookingService {
 
         // Step 4: Update order status to CANCELLED
         OrderStatus previousStatus = order.getOrderStatus();
-        order.setOrderStatus(OrderStatus.CANCELLED);
+        new ReservationContext(order).cancel();
         log.info("Order {} status changed: {} → CANCELLED", orderId, previousStatus);
 
         // Step 5: Set cancellation timestamp
