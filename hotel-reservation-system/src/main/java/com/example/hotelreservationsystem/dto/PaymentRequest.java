@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class PaymentRequest {
     @NotNull(message = "Order ID cannot be null")
-    private Long orderId; // 只需要知道它是个 Long/ID 类型
+    private Long orderId;
 
     @NotNull(message = "Payment Type cannot be null")
     private PaymentType paymentType;
