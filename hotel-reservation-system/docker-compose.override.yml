@@ -1,0 +1,37 @@
+version: '3.8'
+
+# This file is automatically merged with docker-compose.yml in development
+# Use it for development-specific overrides
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder  # Use builder stage for faster rebuilds
+    volumes:
+      # Mount source code for hot reload (requires spring-boot-devtools)
+      - ./src:/app/src
+      - ./build:/app/build
+    environment:
+      # Development-specific settings
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+    # Override command for development (if needed)
+    # command: ["./gradlew", "bootRun"]
+
+  postgres:
+    # Expose PostgreSQL logs in development
+    environment:
+      POSTGRES_LOG_STATEMENT: all
+    # Add pgAdmin for database management (optional)
+    # ports:
+    #   - "5432:5432"
+
+  redis:
+    # Enable Redis persistence in development
+    command: redis-server --requirepass redispass --appendonly yes
+    # Expose Redis CLI for debugging
+    # ports:
+    #   - "6379:6379"
