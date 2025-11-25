@@ -59,6 +59,7 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
           cache: 'gradle'
+          cache-dependency-path: 'hotel-reservation-system/**/*.gradle*'
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -130,7 +131,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./hotel-reservation-system
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
