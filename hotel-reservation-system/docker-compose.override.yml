@@ -1,5 +1,3 @@
-version: '3.8'
-
 # This file is automatically merged with docker-compose.yml in development
 # Use it for development-specific overrides
 
@@ -8,18 +6,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: builder  # Use builder stage for faster rebuilds
-    volumes:
-      # Mount source code for hot reload (requires spring-boot-devtools)
-      - ./src:/app/src
-      - ./build:/app/build
     environment:
       # Development-specific settings
       SPRING_PROFILES_ACTIVE: dev
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_DEVTOOLS_RESTART_ENABLED: "true"
-    # Override command for development (if needed)
-    # command: ["./gradlew", "bootRun"]
 
   postgres:
     # Expose PostgreSQL logs in development
