@@ -53,8 +53,8 @@ services:
       # Redis Configuration
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
-      SPRING_DATA_REDIS_PASSWORD: redispass
-      SPRING_DATA_REDIS_USERNAME: default
+      SPRING_DATA_REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      SPRING_DATA_REDIS_USERNAME: ${REDIS_USERNAME:-}
 
       # JPA Configuration
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
