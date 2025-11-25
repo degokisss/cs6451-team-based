@@ -2,10 +2,11 @@ name: CI/CD Pipeline
 
 on:
   push:
+    # Build and test on every push to any branch
     branches:
-      - main
-      - develop
+      - '**'
   pull_request:
+    # Run on PRs targeting main or develop
     branches:
       - main
       - develop
