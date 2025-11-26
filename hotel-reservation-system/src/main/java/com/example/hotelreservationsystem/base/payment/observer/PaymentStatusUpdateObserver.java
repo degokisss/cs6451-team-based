@@ -2,8 +2,8 @@ package com.example.hotelreservationsystem.base.payment.observer;
 
 import com.example.hotelreservationsystem.dto.PaymentResponse;
 import com.example.hotelreservationsystem.entity.Order;
-import com.example.hotelreservationsystem.enums.OrderStatus;
 import com.example.hotelreservationsystem.repository.OrderRepository;
+import com.example.hotelreservationsystem.service.roomstate.ReservationContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -37,14 +37,14 @@ public class PaymentStatusUpdateObserver implements PaymentObserver {
 
         Order order = orderOpt.get();
 
+        try {
         // Update PENDING orders only
-        if (order.getOrderStatus() == OrderStatus.PENDING) {
-            // Change status to CONFIRMED
-            order.setOrderStatus(OrderStatus.CONFIRMED);
+        ReservationContext context = new ReservationContext(order);
+        context.confirm();
             orderRepository.save(order);
             log.info("Order {} is now CONFIRMED.", orderId);
-        } else {
-            log.warn("Order {} is already in state {}, skipping confirmation.", orderId, order.getOrderStatus());
+        } catch (Exception e) {
+        log.error("Failed to confirm order {} ", orderId);
         }
     }
 }
