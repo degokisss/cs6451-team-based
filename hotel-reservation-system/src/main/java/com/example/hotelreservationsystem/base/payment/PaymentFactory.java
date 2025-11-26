@@ -1,39 +1,44 @@
 package com.example.hotelreservationsystem.base.payment;
+
+import com.example.hotelreservationsystem.base.payment.decorator.PaymentRetryDecorator;
+import com.example.hotelreservationsystem.base.payment.decorator.PaymentValidationDecorator;
 import com.example.hotelreservationsystem.enums.PaymentType;
+import com.example.hotelreservationsystem.repository.OrderRepository;
+import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
-/**
- * Factory for creating payment provider instances.
- * This class returns a payment provider based on the selected payment type.
- */
-@Service
+@Component
 @RequiredArgsConstructor
-@Slf4j
 public class PaymentFactory {
+    private final OrderRepository orderRepository;
 
-    private final CreditCardPaymentProvider creditCardPaymentProvider;
-    private final PayPalPaymentProvider payPalPaymentProvider;
+    public PaymentStrategy getStrategy(PaymentType paymentType) {
 
-    /**
-     * Retrieves the appropriate payment provider for a given payment type.
-     * @param paymentType The type of payment (e.g., CREDIT_CARD, PAYPAL).
-     * @return The corresponding PaymentProvider instance.
-     * @throws IllegalArgumentException if the payment type is unsupported.
-     */
-    public PaymentProvider getProvider(PaymentType paymentType) {
+         PaymentStrategy rawStrategy;
+
+        // 1. Instantiate the base strategy
         switch (paymentType) {
             case CREDIT_CARD:
-                return creditCardPaymentProvider;
+                rawStrategy = new CreditCardPaymentStrategy();
+                break;
             case PAYPAL:
-                return payPalPaymentProvider;
-            case BANK_TRANSFER:
-                // TODO: Bank Transfer payment provider is not implemented yet.
-                log.warn("Bank Transfer not implemented yet");
-                return null;
+                rawStrategy = new PayPalPaymentStrategy();
+                break;
             default:
-                throw new IllegalArgumentException("Unsupported payment type: " + paymentType);
+                throw new IllegalArgumentException("Invalid payment type");
         }
+
+        // 2. Assemble the Decorators
+
+        // Inner:  'Retry' logic
+        // handles network failures for the payment process.
+        PaymentStrategy retryStrategy = new PaymentRetryDecorator(rawStrategy);
+
+        // Outer:  'Validation' logic
+        // checks the database first. If validation fails, noneed for retrying.
+        PaymentStrategy finalStrategy = new PaymentValidationDecorator(retryStrategy, orderRepository);
+
+        return finalStrategy;
+
     }
 }

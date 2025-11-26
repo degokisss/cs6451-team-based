@@ -174,10 +174,6 @@ public class BookingService {
         Order savedOrder = orderRepository.save(order);
         log.info("Created order {} with PENDING status and check-in code {}", savedOrder.getId(), checkInCode);
 
-        // Step 8: Transition to CONFIRMED status (auto-confirm for now)
-        new ReservationContext(savedOrder).confirm();
-        savedOrder = orderRepository.save(savedOrder);
-        log.info("Order {} transitioned to CONFIRMED", savedOrder.getId());
 
         // Step 8.5: Register order as observer for room price changes (Observer Pattern)
         Long roomTypeId = room.getRoomType().getId();

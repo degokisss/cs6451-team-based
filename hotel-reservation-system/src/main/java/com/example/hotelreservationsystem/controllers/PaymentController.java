@@ -12,22 +12,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/payment")
 @RequiredArgsConstructor
 public class PaymentController {
+
     private final PaymentService paymentService;
 
     @PostMapping("/execute")
     public ResponseEntity<PaymentResponse> executePayment(@RequestBody @Validated PaymentRequest request) {
+        // Call service
+        PaymentResponse response = paymentService.executePayment(request.getOrderId(), request.getPaymentType());
 
-        // 1. call Service core logic
-        boolean success = paymentService.executePayment(request.getOrderId(), request.getPaymentType());
-
-        // 2. build response
-        PaymentResponse response = PaymentResponse.builder()
-                .orderId(request.getOrderId())
-                .status(success ? "PAID" : "FAILED")
-                .transactionId("MOCK_TXN_" + request.getOrderId())
-                .message(success ? "Payment processed successfully." : "Payment failed. Please try again.")
-                .build();
-
-        return ResponseEntity.ok(response);
+        if ("SUCCESS".equals(response.getStatus())) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 }
