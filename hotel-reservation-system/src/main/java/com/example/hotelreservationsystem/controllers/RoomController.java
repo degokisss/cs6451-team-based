@@ -55,7 +55,7 @@ public class RoomController {
     }
 
 
-    @GetMapping("/{id:\\d+}")
+    @GetMapping("/{id}")
     public ResponseEntity<com.example.hotelreservationsystem.dto.RoomCreateResponse> getRoomById(@PathVariable Long id) {
         try {
             var dto = roomService.findDtoById(id);
@@ -67,7 +67,7 @@ public class RoomController {
         }
     }
 
-    @GetMapping({"/list", ""})
+    @GetMapping("/list")
     public ResponseEntity<List<RoomCreateResponse>> listRooms() {
         try {
             var dtos = roomService.findAllDto();
@@ -91,7 +91,7 @@ public class RoomController {
         }
     }
 
-    @PutMapping("/{id:\\d+}")
+    @PutMapping("/{id}")
     public ResponseEntity<RoomCreateResponse> updateRoom(@PathVariable Long id, @RequestBody @Valid RoomCreateRequest request) {
         try {
             var response = roomService.update(id, request);
@@ -115,7 +115,7 @@ public class RoomController {
         }
     }
 
-    @DeleteMapping("/{id:\\d+}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
         try {
             var deleted = roomService.delete(id);

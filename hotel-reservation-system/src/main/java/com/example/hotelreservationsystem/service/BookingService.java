@@ -14,6 +14,7 @@ import com.example.hotelreservationsystem.enums.OrderStatus;
 import com.example.hotelreservationsystem.repository.CustomerRepository;
 import com.example.hotelreservationsystem.repository.OrderRepository;
 import com.example.hotelreservationsystem.repository.RoomRepository;
+import com.example.hotelreservationsystem.service.roomstate.ReservationContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
@@ -41,6 +42,62 @@ public class BookingService {
     private final CustomerRepository customerRepository;
     private final NotificationServiceFactory notificationServiceFactory;
     private final RoomService roomService;
+
+    /**
+     * Get a booking order by ID for the authenticated customer.
+     *
+     * @param orderId The order ID to retrieve
+     * @param customerId The authenticated customer ID
+     * @return BookingResponse with order details
+     * @throws IllegalArgumentException if order not found
+     * @throws SecurityException if order does not belong to the customer
+     */
+    @Transactional(readOnly = true)
+    public BookingResponse getBooking(Long orderId, Long customerId) {
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
+
+        if (!order.getCustomer().getId().equals(customerId)) {
+            throw new SecurityException("You are not authorized to view this order");
+        }
+
+        return toBookingResponse(order);
+    }
+
+    /**
+     * Get a booking order by room for the authenticated customer.
+     *
+     * @param roomId The room ID to retrieve the current order for
+     * @param customerId The authenticated customer ID
+     * @return BookingResponse with order details
+     * @throws IllegalArgumentException if no order exists for the room
+     * @throws SecurityException if order does not belong to the customer
+     */
+    @Transactional(readOnly = true)
+    public BookingResponse getBookingByRoom(Long roomId, Long customerId) {
+        Order order = orderRepository.findByRoomId(roomId)
+            .orElseThrow(() -> new IllegalArgumentException("Order not found for room: " + roomId));
+
+        if (!order.getCustomer().getId().equals(customerId)) {
+            throw new SecurityException("You are not authorized to view this order");
+        }
+
+        return toBookingResponse(order);
+    }
+
+    private BookingResponse toBookingResponse(Order order) {
+        return BookingResponse.builder()
+            .orderId(order.getId())
+            .customerId(order.getCustomer().getId())
+            .roomId(order.getRoom().getId())
+            .orderStatus(order.getOrderStatus())
+            .totalPrice(order.getTotalPrice())
+            .checkInDate(order.getCheckInDate())
+            .checkOutDate(order.getCheckOutDate())
+            .createdAt(order.getCreatedAt())
+            .checkInCode(order.getCheckInCode())
+            .build();
+    }
 
     /**
      * Create a booking order from a lock
@@ -117,7 +174,10 @@ public class BookingService {
         Order savedOrder = orderRepository.save(order);
         log.info("Created order {} with PENDING status and check-in code {}", savedOrder.getId(), checkInCode);
 
-
+        // Step 8: Transition to CONFIRMED status (auto-confirm for now)
+        new ReservationContext(savedOrder).confirm();
+        savedOrder = orderRepository.save(savedOrder);
+        log.info("Order {} transitioned to CONFIRMED", savedOrder.getId());
 
         // Step 8.5: Register order as observer for room price changes (Observer Pattern)
         Long roomTypeId = room.getRoomType().getId();
@@ -303,7 +363,7 @@ public class BookingService {
 
         // Step 4: Update order status to CANCELLED
         OrderStatus previousStatus = order.getOrderStatus();
-        order.setOrderStatus(OrderStatus.CANCELLED);
+        new ReservationContext(order).cancel();
         log.info("Order {} status changed: {} → CANCELLED", orderId, previousStatus);
 
         // Step 5: Set cancellation timestamp

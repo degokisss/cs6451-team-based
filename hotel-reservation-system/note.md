@@ -29,7 +29,7 @@
 - Security/OWASP (Gavin)
 - DB Support (ORM)  (Gavin)
 - Monolith Architecture Pattern  (Ismail)
-- Google Login (Ismail)
+- Google Login (Ismail).
 #### 10.Diagram
 - Package Diagram (Gavin)
 - Class Diagram (Gavin)

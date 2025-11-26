@@ -12,6 +12,7 @@ import com.example.hotelreservationsystem.enums.OrderStatus;
 import com.example.hotelreservationsystem.exception.HotelAlreadyExistsException;
 import com.example.hotelreservationsystem.repository.HotelRepository;
 import com.example.hotelreservationsystem.repository.OrderRepository;
+import com.example.hotelreservationsystem.service.roomstate.ReservationContext;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
@@ -120,8 +121,9 @@ public class HotelService {
         } else {
             // valid
             // update the status
-            order.get().setOrderStatus(OrderStatus.CONFIRMED);
-            orderRepository.save(order.get());
+            Order currentOrder = order.get();
+            new ReservationContext(currentOrder).confirm();
+            orderRepository.save(currentOrder);
 
             // send notification
             try {
@@ -166,8 +168,9 @@ public class HotelService {
                     .build();
         } else {
             // update the status
-            order.get().setOrderStatus(OrderStatus.COMPLETED);
-            orderRepository.save(order.get());
+            Order currentOrder = order.get();
+            new ReservationContext(currentOrder).complete();
+            orderRepository.save(currentOrder);
 
             // send notification
             try {
