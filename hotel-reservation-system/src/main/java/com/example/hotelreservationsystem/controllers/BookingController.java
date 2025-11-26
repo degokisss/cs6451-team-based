@@ -28,6 +28,66 @@ public class BookingController {
     private final AuthenticationService authenticationService;
 
     /**
+     * Get a booking order for the authenticated customer
+     * GET /api/bookings/{orderId}
+     *
+     * @param orderId The order ID to retrieve
+     * @return BookingResponse with order details
+     */
+    @GetMapping("/{orderId}")
+    public ResponseEntity<?> getBooking(@PathVariable Long orderId) {
+        try {
+            var authentication = SecurityContextHolder.getContext().getAuthentication();
+            var email = authentication.getName();
+            Customer customer = authenticationService.getCurrentUser(email);
+            Long authenticatedCustomerId = customer.getId();
+
+            BookingResponse response = bookingService.getBooking(orderId, authenticatedCustomerId);
+            return ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException e) {
+            log.warn("Order not found: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (SecurityException e) {
+            log.warn("Unauthorized booking access: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            log.error("Failed to get booking {}", orderId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get booking");
+        }
+    }
+
+    /**
+     * Get a booking order by room for the authenticated customer
+     * GET /api/bookings/room/{roomId}
+     *
+     * @param roomId The room ID to retrieve
+     * @return BookingResponse with order details
+     */
+    @GetMapping("/room/{roomId}")
+    public ResponseEntity<?> getBookingByRoom(@PathVariable Long roomId) {
+        try {
+            var authentication = SecurityContextHolder.getContext().getAuthentication();
+            var email = authentication.getName();
+            Customer customer = authenticationService.getCurrentUser(email);
+            Long authenticatedCustomerId = customer.getId();
+
+            BookingResponse response = bookingService.getBookingByRoom(roomId, authenticatedCustomerId);
+            return ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException e) {
+            log.warn("Order not found for room {}: {}", roomId, e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (SecurityException e) {
+            log.warn("Unauthorized booking access for room {}: {}", roomId, e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            log.error("Failed to get booking for room {}", roomId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get booking");
+        }
+    }
+
+    /**
      * Create a booking order from a lock
      * POST /api/bookings
      * Requires authentication - customerId is extracted from JWT token

@@ -44,6 +44,62 @@ public class BookingService {
     private final RoomService roomService;
 
     /**
+     * Get a booking order by ID for the authenticated customer.
+     *
+     * @param orderId The order ID to retrieve
+     * @param customerId The authenticated customer ID
+     * @return BookingResponse with order details
+     * @throws IllegalArgumentException if order not found
+     * @throws SecurityException if order does not belong to the customer
+     */
+    @Transactional(readOnly = true)
+    public BookingResponse getBooking(Long orderId, Long customerId) {
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
+
+        if (!order.getCustomer().getId().equals(customerId)) {
+            throw new SecurityException("You are not authorized to view this order");
+        }
+
+        return toBookingResponse(order);
+    }
+
+    /**
+     * Get a booking order by room for the authenticated customer.
+     *
+     * @param roomId The room ID to retrieve the current order for
+     * @param customerId The authenticated customer ID
+     * @return BookingResponse with order details
+     * @throws IllegalArgumentException if no order exists for the room
+     * @throws SecurityException if order does not belong to the customer
+     */
+    @Transactional(readOnly = true)
+    public BookingResponse getBookingByRoom(Long roomId, Long customerId) {
+        Order order = orderRepository.findByRoomId(roomId)
+            .orElseThrow(() -> new IllegalArgumentException("Order not found for room: " + roomId));
+
+        if (!order.getCustomer().getId().equals(customerId)) {
+            throw new SecurityException("You are not authorized to view this order");
+        }
+
+        return toBookingResponse(order);
+    }
+
+    private BookingResponse toBookingResponse(Order order) {
+        return BookingResponse.builder()
+            .orderId(order.getId())
+            .customerId(order.getCustomer().getId())
+            .roomId(order.getRoom().getId())
+            .orderStatus(order.getOrderStatus())
+            .totalPrice(order.getTotalPrice())
+            .checkInDate(order.getCheckInDate())
+            .checkOutDate(order.getCheckOutDate())
+            .createdAt(order.getCreatedAt())
+            .checkInCode(order.getCheckInCode())
+            .build();
+    }
+
+    /**
      * Create a booking order from a lock
      *
      * @param request Booking creation request with lock ID and booking details
