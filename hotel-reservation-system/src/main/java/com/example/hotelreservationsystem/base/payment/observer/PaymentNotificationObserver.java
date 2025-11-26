@@ -15,7 +15,8 @@ import java.util.Optional;
 
 /**
  * [Observer Pattern]
- * Concrete Observer #2
+ * Concrete Observer #2： send payment receipt email after payment success
+ * Job: After successful payment, send receipt email to customer
  */
 @Component
 @Slf4j

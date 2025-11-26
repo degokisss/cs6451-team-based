@@ -5,6 +5,7 @@ import com.example.hotelreservationsystem.base.payment.PaymentStrategy;
 import com.example.hotelreservationsystem.base.payment.observer.PaymentAuditObserver;
 import com.example.hotelreservationsystem.base.payment.observer.PaymentNotificationObserver;
 import com.example.hotelreservationsystem.base.payment.observer.PaymentObserver;
+import com.example.hotelreservationsystem.base.payment.observer.PaymentStatusUpdateObserver;
 import com.example.hotelreservationsystem.dto.PaymentRequest;
 import com.example.hotelreservationsystem.dto.PaymentResponse;
 import com.example.hotelreservationsystem.enums.PaymentType;
@@ -24,12 +25,15 @@ public class PaymentService {
     public PaymentService(
             PaymentFactory paymentFactory,
             PaymentNotificationObserver notificationObserver,
-            PaymentAuditObserver auditObserver
+            PaymentAuditObserver auditObserver,
+            PaymentStatusUpdateObserver statusUpdateObserver
     ) {
         this.paymentFactory = paymentFactory;
 
         this.addObserver(notificationObserver);
+        this.addObserver(statusUpdateObserver);
         this.addObserver(auditObserver);
+
 
         log.info("PaymentService initialized with {} manual observers.", observers.size());
     }

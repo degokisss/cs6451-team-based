@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * [Observer Pattern]
- * Concrete Observer #1
+ * Concrete Observer #1： log payment transaction for auditing
+ * Job: After successful payment, log transaction ID to secure notebook (mock)
  **/
 @Component
 @Slf4j
