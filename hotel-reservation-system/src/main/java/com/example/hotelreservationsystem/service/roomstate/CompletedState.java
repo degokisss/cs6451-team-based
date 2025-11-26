@@ -1,4 +1,4 @@
-package com.example.hotelreservationsystem.service.state;
+package com.example.hotelreservationsystem.service.roomstate;
 
 /**
  * Terminal completed state; transitions are no-ops.

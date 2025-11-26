@@ -38,6 +38,10 @@ public class BookingController {
     public ResponseEntity<?> getBooking(@PathVariable Long orderId) {
         try {
             var authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                log.warn("Unauthenticated access attempt for booking {}", orderId);
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
             var email = authentication.getName();
             Customer customer = authenticationService.getCurrentUser(email);
             Long authenticatedCustomerId = customer.getId();
@@ -68,6 +72,10 @@ public class BookingController {
     public ResponseEntity<?> getBookingByRoom(@PathVariable Long roomId) {
         try {
             var authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                log.warn("Unauthenticated access attempt for room {}", roomId);
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
             var email = authentication.getName();
             Customer customer = authenticationService.getCurrentUser(email);
             Long authenticatedCustomerId = customer.getId();

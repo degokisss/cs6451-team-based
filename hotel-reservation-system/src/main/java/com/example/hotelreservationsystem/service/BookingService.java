@@ -14,7 +14,7 @@ import com.example.hotelreservationsystem.enums.OrderStatus;
 import com.example.hotelreservationsystem.repository.CustomerRepository;
 import com.example.hotelreservationsystem.repository.OrderRepository;
 import com.example.hotelreservationsystem.repository.RoomRepository;
-import com.example.hotelreservationsystem.service.state.ReservationContext;
+import com.example.hotelreservationsystem.service.roomstate.ReservationContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;

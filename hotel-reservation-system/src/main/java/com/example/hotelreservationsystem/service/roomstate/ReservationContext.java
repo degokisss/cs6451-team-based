@@ -1,4 +1,4 @@
-package com.example.hotelreservationsystem.service.state;
+package com.example.hotelreservationsystem.service.roomstate;
 
 import com.example.hotelreservationsystem.entity.Order;
 import com.example.hotelreservationsystem.enums.OrderStatus;
