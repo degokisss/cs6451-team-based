@@ -28,7 +28,6 @@ class RoomSearchServiceTest {
     @Mock
     private BookingLockService bookingLockService;
 
-    @InjectMocks
     private RoomSearchService roomSearchService;
 
     private Room room1;
@@ -40,6 +39,9 @@ class RoomSearchServiceTest {
 
     @BeforeEach
     void setUp() {
+        // Initialize RoomSearchService with empty observer list
+        roomSearchService = new RoomSearchService(roomRepository, bookingLockService, List.of());
+
         // Create test hotels
         hotel1 = new Hotel();
         hotel1.setId(1L);

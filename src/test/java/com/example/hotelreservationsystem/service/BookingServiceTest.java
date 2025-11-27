@@ -116,13 +116,13 @@ class BookingServiceTest {
         assertEquals(1L, response.getOrderId());
         assertEquals(TEST_CUSTOMER_ID, response.getCustomerId());
         assertEquals(TEST_ROOM_ID, response.getRoomId());
-        assertEquals(OrderStatus.CONFIRMED, response.getOrderStatus());
+        assertEquals(OrderStatus.PENDING, response.getOrderStatus()); // Order starts as PENDING, transitions to CONFIRMED after payment
         assertEquals(new BigDecimal("300.00"), response.getTotalPrice()); // 100 * 3 nights
         assertNotNull(response.getCheckInCode());
         assertEquals(8, response.getCheckInCode().length());
 
         verify(bookingLockService).getLockInfo(TEST_ROOM_ID);
-        verify(orderRepository, times(2)).save(any(Order.class)); // PENDING then CONFIRMED
+        verify(orderRepository, times(1)).save(any(Order.class)); // Only PENDING (CONFIRMED happens via PaymentStatusUpdateObserver)
         verify(bookingLockService).releaseLock(TEST_LOCK_ID, TEST_CUSTOMER_ID);
     }
 
@@ -284,8 +284,9 @@ class BookingServiceTest {
     }
 
     @Test
-    void shouldTransitionFromPendingToConfirmed() {
+    void shouldCreateOrderWithPendingStatus() {
         // Given
+        // Note: Transition to CONFIRMED now happens via PaymentStatusUpdateObserver after payment
         BookingCreateRequest request = createValidRequest();
         Map<String, Object> lockInfo = createValidLockInfo();
         Room room = createTestRoom();
@@ -296,7 +297,7 @@ class BookingServiceTest {
         when(customerRepository.findById(TEST_CUSTOMER_ID)).thenReturn(Optional.of(customer));
         when(bookingLockService.releaseLock(TEST_LOCK_ID, TEST_CUSTOMER_ID)).thenReturn(true);
 
-        // Capture the status at the time of each save call
+        // Capture the status at the time of save call
         var capturedStatuses = new java.util.ArrayList<OrderStatus>();
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> {
             Order order = invocation.getArgument(0);
@@ -307,14 +308,14 @@ class BookingServiceTest {
         });
 
         // When
-        bookingService.createBooking(request);
+        BookingResponse response = bookingService.createBooking(request);
 
         // Then
-        verify(orderRepository, times(2)).save(any(Order.class));
-        assertEquals(2, capturedStatuses.size());
-        // First save should be PENDING, second save should be CONFIRMED
+        verify(orderRepository, times(1)).save(any(Order.class));
+        assertEquals(1, capturedStatuses.size());
+        // Order should be created in PENDING status
         assertEquals(OrderStatus.PENDING, capturedStatuses.get(0));
-        assertEquals(OrderStatus.CONFIRMED, capturedStatuses.get(1));
+        assertEquals(OrderStatus.PENDING, response.getOrderStatus());
     }
 
     @Test
@@ -436,7 +437,7 @@ class BookingServiceTest {
             .checkOutDate(CHECK_OUT_DATE)
             .numberOfNights(3L)
             .totalPrice(new BigDecimal("300.00"))
-            .orderStatus(OrderStatus.CONFIRMED)
+            .orderStatus(OrderStatus.PENDING) // Orders start as PENDING, transition to CONFIRMED via PaymentStatusUpdateObserver
             .checkInCode("ABCD1234")
             .build();
         order.setId(1L);
