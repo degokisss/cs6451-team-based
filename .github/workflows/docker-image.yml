@@ -20,10 +20,6 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./hotel-reservation-system
-
     services:
       postgres:
         image: postgres:16-alpine
@@ -59,7 +55,7 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
           cache: 'gradle'
-          cache-dependency-path: 'hotel-reservation-system/**/*.gradle*'
+          cache-dependency-path: '**/*.gradle*'
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -131,7 +127,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./hotel-reservation-system
+          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

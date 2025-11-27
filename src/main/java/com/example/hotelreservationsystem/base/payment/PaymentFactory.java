@@ -14,19 +14,13 @@ public class PaymentFactory {
 
     public PaymentStrategy getStrategy(PaymentType paymentType) {
 
-         PaymentStrategy rawStrategy;
+         PaymentStrategy rawStrategy = switch (paymentType) {
+             case CREDIT_CARD -> new CreditCardPaymentStrategy();
+             case PAYPAL -> new PayPalPaymentStrategy();
+             default -> throw new IllegalArgumentException("Invalid payment type");
+         };
 
         // 1. Instantiate the base strategy
-        switch (paymentType) {
-            case CREDIT_CARD:
-                rawStrategy = new CreditCardPaymentStrategy();
-                break;
-            case PAYPAL:
-                rawStrategy = new PayPalPaymentStrategy();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid payment type");
-        }
 
         // 2. Assemble the Decorators
 
@@ -36,9 +30,8 @@ public class PaymentFactory {
 
         // Outer:  'Validation' logic
         // checks the database first. If validation fails, noneed for retrying.
-        PaymentStrategy finalStrategy = new PaymentValidationDecorator(retryStrategy, orderRepository);
 
-        return finalStrategy;
+        return new PaymentValidationDecorator(retryStrategy, orderRepository);
 
     }
 }
