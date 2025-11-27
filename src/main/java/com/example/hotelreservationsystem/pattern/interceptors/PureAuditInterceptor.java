@@ -148,8 +148,8 @@ public class PureAuditInterceptor implements Interceptor {
 
         switch (event.getStatus()) {
             case "SUCCESS" -> log.info(message);
-            case "UNAUTHORIZED" -> log.warn(message + " - Auth failed");
-            case "ERROR", "SERVER_ERROR" -> log.error(message + " - Error: {}", event.getErrorMessage());
+            case "UNAUTHORIZED" -> log.warn("{} - Auth failed", message);
+            case "ERROR", "SERVER_ERROR" -> log.error("{} - Error: {}", message, event.getErrorMessage());
             default -> log.warn(message);
         }
     }

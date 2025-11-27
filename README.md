@@ -51,7 +51,7 @@ src/main/java/com/example/hotelreservationsystem/
 
 ### 1. Lombok Usage
 
-#### ✅ DO: Use Explicit Annotations for JPA Entities
+####  DO: Use Explicit Annotations for JPA Entities
 
 **For entities with inheritance:**
 ```java
@@ -72,7 +72,7 @@ public class MyEntity extends BaseEntityAudit {
 - Explicit annotations give full control over `callSuper` and `exclude` parameters
 - Bidirectional relationships MUST be excluded to prevent circular references
 
-#### ❌ DON'T: Use @Data with Inheritance
+####  DON'T: Use @Data with Inheritance
 
 ```java
 // WRONG - causes callSuper issues
@@ -145,7 +145,7 @@ private RelatedEntity relatedEntity;
 private List<ChildEntity> children = new ArrayList<>();  // Initialize collections
 ```
 
-**❌ DON'T: Add @Column to relationship fields**
+** DON'T: Add @Column to relationship fields**
 ```java
 // WRONG
 @Column  // Remove this!
@@ -168,7 +168,7 @@ private RoomStatus status;
 - More readable in database
 - Easier debugging
 
-**❌ DON'T: Use AttributeConverter for enums unless absolutely necessary**
+** DON'T: Use AttributeConverter for enums unless absolutely necessary**
 ```java
 // Avoid unless you have specific requirements
 @Convert(converter = MyEnumConverter.class)
@@ -226,7 +226,7 @@ public class Room extends BaseEntityAudit {
 #### Field Naming Rules
 
 ```java
-// ✅ Correct
+//  Correct
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;  // lowercase
@@ -234,7 +234,7 @@ private Long id;  // lowercase
 @Column(name = "created_at")
 private LocalDateTime createdAt;  // camelCase in Java
 
-// ❌ Wrong
+//  Wrong
 private Long Id;  // uppercase first letter
 private LocalDateTime created_at;  // snake_case in Java
 ```
@@ -308,7 +308,7 @@ public class CustomerService {
 
 #### Dependency Injection
 
-**✅ DO: Use constructor injection**
+** DO: Use constructor injection**
 ```java
 @Service
 @RequiredArgsConstructor  // Lombok generates constructor
@@ -318,7 +318,7 @@ public class RoomService {
 }
 ```
 
-**❌ DON'T: Use field injection**
+** DON'T: Use field injection**
 ```java
 // Avoid this
 @Service
@@ -359,13 +359,13 @@ public class CustomerController {
 
 **Use descriptive names matching the domain:**
 ```java
-// ✅ Good - clear and descriptive
+//Good - clear and descriptive
 @GetMapping("/search")
 public List<Room> searchRooms(@RequestParam Long roomTypeId) {
     // ...
 }
 
-// ❌ Bad - ambiguous or misleading
+//Bad - ambiguous or misleading
 @GetMapping("/search")
 public List<Room> searchRooms(@RequestParam long roomType) {  // What is roomType?
     // ...
@@ -387,7 +387,7 @@ public class GlobalExceptionHandler {
 }
 ```
 
-**❌ DON'T: Swallow exceptions**
+**DON'T: Swallow exceptions**
 ```java
 // Bad practice
 try {
@@ -572,7 +572,7 @@ class CustomerServiceTest {
     void shouldCreateCustomer() {
         // Given
         Customer customer = new Customer();
-        customer.setName("John Doe");
+        customer.setName("Test");
 
         when(customerRepository.save(any(Customer.class)))
             .thenReturn(customer);
@@ -581,7 +581,7 @@ class CustomerServiceTest {
         Customer result = customerService.createCustomer(customer);
 
         // Then
-        assertThat(result.getName()).isEqualTo("John Doe");
+        assertThat(result.getName()).isEqualTo("Test");
         verify(customerRepository).save(customer);
     }
 }

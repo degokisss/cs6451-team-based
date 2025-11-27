@@ -52,9 +52,9 @@ public class PureAuthenticationInterceptor implements Interceptor {
 
         // Log result
         if (status >= 200 && status < 300) {
-            log.info("✅ [PURE AUTH] Authentication successful");
+            log.info(" [PURE AUTH] Authentication successful");
         } else if (status == 401) {
-            log.warn("❌ [PURE AUTH] Authentication failed - Unauthorized");
+            log.warn(" [PURE AUTH] Authentication failed - Unauthorized");
         } else if (status >= 400) {
             log.warn("⚠️ [PURE AUTH] Authentication failed - Status: {}", status);
         }

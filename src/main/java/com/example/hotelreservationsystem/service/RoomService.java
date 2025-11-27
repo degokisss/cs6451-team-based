@@ -9,7 +9,6 @@ import com.example.hotelreservationsystem.repository.RoomTypeRepository;
 import com.example.hotelreservationsystem.entity.RoomType;
 import com.example.hotelreservationsystem.dto.RoomCreateRequest;
 import com.example.hotelreservationsystem.dto.RoomCreateResponse;
-import com.example.hotelreservationsystem.enums.RoomStatus;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class RoomService {
     private final ConcurrentHashMap<Long, Float> _prices = new ConcurrentHashMap<>();
 
     public void addObserver(Long roomType, PricingObserver observer) {
-        _dependencies.computeIfAbsent(roomType, s -> new ArrayList<>()).add(observer);
+        _dependencies.computeIfAbsent(roomType, _ -> new ArrayList<>()).add(observer);
     }
 
     public void removeObserver(Long roomType, PricingObserver observer) {
