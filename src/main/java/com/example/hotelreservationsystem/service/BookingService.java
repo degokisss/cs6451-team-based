@@ -178,7 +178,7 @@ public class BookingService {
         // Step 8.5: Register order as observer for room price changes (Observer Pattern)
         Long roomTypeId = room.getRoomType().getId();
         OrderPriceObserver priceObserver = new OrderPriceObserver(savedOrder, orderRepository);
-        roomService.addObserver(roomTypeId, priceObserver);
+        roomService.attach(roomTypeId, priceObserver);
         log.info("Registered Order {} as price observer for RoomType ID: {}", savedOrder.getId(), roomTypeId);
 
         // Step 9: Release lock from Redis
@@ -379,7 +379,7 @@ public class BookingService {
         // Step 8: Unregister order from price observers (Observer Pattern cleanup)
         try {
             Long roomTypeId = order.getRoom().getRoomType().getId();
-            roomService.removeObserver(roomTypeId, cancelledOrder);
+            roomService.detach(roomTypeId, cancelledOrder);
             log.info("Unregistered Order {} from price observer for RoomType ID: {}", orderId, roomTypeId);
         } catch (Exception e) {
             log.warn("Failed to unregister order {} from price observer: {}", orderId, e.getMessage());

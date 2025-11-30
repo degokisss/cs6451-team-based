@@ -360,7 +360,7 @@ class BookingServiceTest {
 
         // Then - Verify observer was registered for the room type
         Long roomTypeId = room.getRoomType().getId();
-        verify(roomService).addObserver(eq(roomTypeId), any());
+        verify(roomService).attach(eq(roomTypeId), any());
     }
 
     @Test
@@ -474,7 +474,7 @@ class BookingServiceTest {
         assertEquals("Change of plans", order.getCancellationReason());
 
         verify(orderRepository).save(order);
-        verify(roomService).removeObserver(any(), any());
+        verify(roomService).detach(any(), any());
     }
 
     @Test
@@ -614,7 +614,7 @@ class BookingServiceTest {
 
         // Then
         Long roomTypeId = order.getRoom().getRoomType().getId();
-        verify(roomService).removeObserver(eq(roomTypeId), any(Order.class));
+        verify(roomService).detach(eq(roomTypeId), any(Order.class));
     }
 
     @Test
@@ -625,7 +625,7 @@ class BookingServiceTest {
 
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
-        doThrow(new RuntimeException("Observer cleanup failed")).when(roomService).removeObserver(any(), any());
+        doThrow(new RuntimeException("Observer cleanup failed")).when(roomService).detach(any(), any());
 
         // When
         CancellationResponse response = bookingService.cancelBooking(1L, TEST_CUSTOMER_ID, "Test");

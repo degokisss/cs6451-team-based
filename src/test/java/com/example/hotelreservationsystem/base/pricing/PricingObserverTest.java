@@ -15,10 +15,10 @@ public class PricingObserverTest {
 
     @Test
     public void testObserver() {
-        roomService.addObserver(1L, price -> assertEquals(100f, price));
-        roomService.addObserver(1L, price -> assertEquals(100f, price));
+        roomService.attach(1L, price -> assertEquals(100f, price));
+        roomService.attach(1L, price -> assertEquals(100f, price));
 
-        roomService.addObserver(2L, price -> assertEquals(200f, price));
+        roomService.attach(2L, price -> assertEquals(200f, price));
 
         roomService.updatePrice(1L, 100f);
         roomService.updatePrice(2L, 200f);

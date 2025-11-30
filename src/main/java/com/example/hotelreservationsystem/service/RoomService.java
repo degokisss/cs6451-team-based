@@ -1,5 +1,6 @@
 package com.example.hotelreservationsystem.service;
 
+import com.example.hotelreservationsystem.base.pricing.PricingObject;
 import com.example.hotelreservationsystem.base.pricing.PricingObserver;
 import com.example.hotelreservationsystem.entity.Room;
 import com.example.hotelreservationsystem.enums.RoomStatus;
@@ -20,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
-public class RoomService {
+public class RoomService implements PricingObject {
     private final RoomRepository roomRepository;
     private final HotelRepository hotelRepository;
     private final RoomTypeRepository roomTypeRepository;
@@ -30,18 +31,21 @@ public class RoomService {
     // Long: roomType, Float: price
     private final ConcurrentHashMap<Long, Float> _prices = new ConcurrentHashMap<>();
 
-    public void addObserver(Long roomType, PricingObserver observer) {
+    @Override
+    public void attach(Long roomType, PricingObserver observer) {
         _dependencies.computeIfAbsent(roomType, _ -> new ArrayList<>()).add(observer);
     }
 
-    public void removeObserver(Long roomType, PricingObserver observer) {
+    @Override
+    public void detach(Long roomType, PricingObserver observer) {
         List<PricingObserver> observers = _dependencies.get(roomType);
         if (observers != null) {
             observers.remove(observer);
         }
     }
 
-    public synchronized void notifyObservers(Long roomType, Float price) {
+    @Override
+    public synchronized void notify(Long roomType, Float price) {
         List<PricingObserver> observers = _dependencies.get(roomType);
         if (observers != null) {
             for (PricingObserver observer : observers) {
@@ -54,7 +58,7 @@ public class RoomService {
         Float oldPrice = _prices.get(roomType);
         if (oldPrice == null || !oldPrice.equals(price)) {
             _prices.put(roomType, price);
-            notifyObservers(roomType, price);
+            notify(roomType, price);
         }
     }
 
