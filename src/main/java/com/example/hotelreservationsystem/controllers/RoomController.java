@@ -1,5 +1,6 @@
 package com.example.hotelreservationsystem.controllers;
 
+import com.example.hotelreservationsystem.base.pricing.RoomPriceFactory;
 import com.example.hotelreservationsystem.dto.RoomCreateRequest;
 import com.example.hotelreservationsystem.dto.RoomCreateResponse;
 import com.example.hotelreservationsystem.dto.RoomPriceUpdateRequest;
@@ -22,6 +23,7 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService roomService;
+    private final RoomPriceFactory roomPriceFactory;
 
     @GetMapping("/search")
     public ResponseEntity<List<RoomCreateResponse>> searchRooms(@RequestParam Long roomTypeId){
@@ -106,7 +108,10 @@ public class RoomController {
     @PutMapping("/price")
     public ResponseEntity<RoomType> updateRoomTypePrice(@RequestBody @Valid RoomPriceUpdateRequest request) {
         try {
-            var updatedRoomType = roomService.updatePrice(request.getRoomTypeId(), request.getPrice());
+            var tiers = request.getPriceTiers();
+            var priceComponent = roomPriceFactory.createPriceComponent1(tiers, request.getPrice());
+            var price = priceComponent.calc();
+            var updatedRoomType = roomService.updatePrice(request.getRoomTypeId(), price);
             if (updatedRoomType == null) return ResponseEntity.notFound().build();
             return ResponseEntity.ok(updatedRoomType);
         } catch (Exception e) {
