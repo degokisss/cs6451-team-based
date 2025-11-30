@@ -73,10 +73,10 @@ public class PurePerformanceInterceptor implements Interceptor {
 
         // Check for performance issues
         if (executionTime > SLOW_THRESHOLD) {
-            log.warn("🐌 [PURE PERF] SLOW REQUEST: {} {} - {}ms (threshold: {}ms)",
+            log.warn(" [PURE PERF] SLOW REQUEST: {} {} - {}ms (threshold: {}ms)",
                 context.getMethod(), context.getRequestURI(), executionTime, SLOW_THRESHOLD);
         } else if (executionTime > WARNING_THRESHOLD) {
-            log.warn("⚠️ [PURE PERF] Approaching threshold: {} {} - {}ms",
+            log.warn(" [PURE PERF] Approaching threshold: {} {} - {}ms",
                 context.getMethod(), context.getRequestURI(), executionTime);
         }
 
@@ -101,7 +101,7 @@ public class PurePerformanceInterceptor implements Interceptor {
         if (time < 100) return "⚡";
         if (time < WARNING_THRESHOLD) return "🚀";
         if (time < SLOW_THRESHOLD) return "🐢";
-        return "🐌";
+        return "";
     }
 
     public List<PerformanceMetric> getAllMetrics() {

@@ -56,7 +56,7 @@ public class PureAuthenticationInterceptor implements Interceptor {
         } else if (status == 401) {
             log.warn(" [PURE AUTH] Authentication failed - Unauthorized");
         } else if (status >= 400) {
-            log.warn("⚠️ [PURE AUTH] Authentication failed - Status: {}", status);
+            log.warn(" [PURE AUTH] Authentication failed - Status: {}", status);
         }
     }
 
@@ -89,7 +89,7 @@ public class PureAuthenticationInterceptor implements Interceptor {
             // Allow to continue - controller will handle
         }
 
-        log.info("📧 [PURE AUTH] Login attempt from: {}", context.getClientIP());
+        log.info("[PURE AUTH] Login attempt from: {}", context.getClientIP());
         return true;
     }
 
@@ -103,7 +103,7 @@ public class PureAuthenticationInterceptor implements Interceptor {
             log.warn("[PURE AUTH] Logout without valid Authorization header");
             // Allow to continue - controller will handle
         } else {
-            log.info("👋 [PURE AUTH] Logout from: {}", context.getClientIP());
+            log.info("[PURE AUTH] Logout from: {}", context.getClientIP());
         }
 
         return true;
