@@ -14,11 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Pure Audit Interceptor - Framework-agnostic audit logging.
- * <p>
- * Creates comprehensive audit trails for authentication events
- * without depending on Spring's HandlerInterceptor interface.
- * <p>
+ * Audit Interceptor - Framework-agnostic audit logging.
  * Responsibilities:
  * - Track all authentication attempts
  * - Record security-relevant data
@@ -27,7 +23,7 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class PureAuditInterceptor implements Interceptor {
+public class AuditInterceptor implements Interceptor {
 
     private static final String EVENT_ID_KEY = "audit.eventId";
     private static final String START_TIME_KEY = "audit.startTime";
@@ -64,7 +60,7 @@ public class PureAuditInterceptor implements Interceptor {
 
         auditLog.add(event);
 
-        log.info("📋 [PURE AUDIT] Event {} - {} {} initiated from {}",
+        log.info("[PURE AUDIT] Event {} - {} {} initiated from {}",
             eventId, context.getMethod(), uri, event.getClientIP());
 
         return true;
@@ -141,7 +137,7 @@ public class PureAuditInterceptor implements Interceptor {
 
     private void logAuditResult(AuditEvent event) {
         String message = String.format(
-            "📋 [PURE AUDIT] Event %s - %s: %s (Status: %d, Duration: %dms, IP: %s)",
+            " [PURE AUDIT] Event %s - %s: %s (Status: %d, Duration: %dms, IP: %s)",
             event.getEventId(), event.getEventType(), event.getStatus(),
             event.getHttpStatusCode(), event.getDurationMs(), event.getClientIP()
         );

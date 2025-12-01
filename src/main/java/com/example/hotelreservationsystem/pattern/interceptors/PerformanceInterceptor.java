@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class PurePerformanceInterceptor implements Interceptor {
+public class PerformanceInterceptor implements Interceptor {
 
     private static final long SLOW_THRESHOLD = 1000; // 1 second
     private static final long WARNING_THRESHOLD = 500; // 500ms

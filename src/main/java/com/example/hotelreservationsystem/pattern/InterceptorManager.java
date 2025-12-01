@@ -1,8 +1,8 @@
 package com.example.hotelreservationsystem.pattern;
 
-import com.example.hotelreservationsystem.pattern.interceptors.PureAuthenticationInterceptor;
-import com.example.hotelreservationsystem.pattern.interceptors.PureAuditInterceptor;
-import com.example.hotelreservationsystem.pattern.interceptors.PurePerformanceInterceptor;
+import com.example.hotelreservationsystem.pattern.interceptors.AuthenticationInterceptor;
+import com.example.hotelreservationsystem.pattern.interceptors.AuditInterceptor;
+import com.example.hotelreservationsystem.pattern.interceptors.PerformanceInterceptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class InterceptorManager {
 
-    private final PurePerformanceInterceptor performanceInterceptor;
-    private final PureAuditInterceptor auditInterceptor;
-    private final PureAuthenticationInterceptor authenticationInterceptor;
+    private final PerformanceInterceptor performanceInterceptor;
+    private final AuditInterceptor auditInterceptor;
+    private final AuthenticationInterceptor authenticationInterceptor;
 
     /**
      * Create interceptor chain for authentication endpoints.

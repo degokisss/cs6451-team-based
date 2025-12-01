@@ -1,8 +1,8 @@
 package com.example.hotelreservationsystem.pattern;
 
-import com.example.hotelreservationsystem.pattern.interceptors.PureAuditInterceptor;
-import com.example.hotelreservationsystem.pattern.interceptors.PureAuthenticationInterceptor;
-import com.example.hotelreservationsystem.pattern.interceptors.PurePerformanceInterceptor;
+import com.example.hotelreservationsystem.pattern.interceptors.AuditInterceptor;
+import com.example.hotelreservationsystem.pattern.interceptors.AuthenticationInterceptor;
+import com.example.hotelreservationsystem.pattern.interceptors.PerformanceInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,22 +14,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for Interceptor Pattern Implementation.
- * <p>
- * This test demonstrates the framework-agnostic interceptor pattern
- * without relying on Spring's HandlerInterceptor integration.
  */
-class PureInterceptorPatternTest {
+class InterceptorPatternTest {
 
-    private PureAuthenticationInterceptor authInterceptor;
-    private PureAuditInterceptor auditInterceptor;
-    private PurePerformanceInterceptor perfInterceptor;
+    private AuthenticationInterceptor authInterceptor;
+    private AuditInterceptor auditInterceptor;
+    private PerformanceInterceptor perfInterceptor;
     private InterceptorManager interceptorManager;
 
     @BeforeEach
     void setUp() {
-        authInterceptor = new PureAuthenticationInterceptor();
-        auditInterceptor = new PureAuditInterceptor();
-        perfInterceptor = new PurePerformanceInterceptor();
+        authInterceptor = new AuthenticationInterceptor();
+        auditInterceptor = new AuditInterceptor();
+        perfInterceptor = new PerformanceInterceptor();
         interceptorManager = new InterceptorManager(
             perfInterceptor, auditInterceptor, authInterceptor
         );

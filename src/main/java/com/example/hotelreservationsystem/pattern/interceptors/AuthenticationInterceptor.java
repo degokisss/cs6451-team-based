@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class PureAuthenticationInterceptor implements Interceptor {
+public class AuthenticationInterceptor implements Interceptor {
 
     private static final String START_TIME_KEY = "auth.startTime";
 
