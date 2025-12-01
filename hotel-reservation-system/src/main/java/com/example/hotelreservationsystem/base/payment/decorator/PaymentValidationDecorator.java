@@ -39,7 +39,7 @@ public class PaymentValidationDecorator extends PaymentStrategyDecorator {
 
         Order order = orderOpt.get();
 
-        // Prevent duplicate payments
+        //  Prevent duplicate payments
         //  only allow payment if the order status is 'PENDING'.
         if (order.getOrderStatus() != OrderStatus.PENDING) {
             log.warn("Validation failed: Order {} is already {}. Payment rejected.",

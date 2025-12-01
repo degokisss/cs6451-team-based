@@ -2,6 +2,7 @@ package com.example.hotelreservationsystem.base.payment;
 
 import com.example.hotelreservationsystem.dto.PaymentRequest;
 import com.example.hotelreservationsystem.dto.PaymentResponse;
+import com.example.hotelreservationsystem.enums.PaymentType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +38,11 @@ public class CreditCardPaymentStrategy implements PaymentStrategy {
                 .transactionId(transactionId)
                 .message("Credit Card payment processed successfully.")
                 .build();
+    }
+
+    //return its type to factory
+    @Override
+    public PaymentType getType() {
+        return PaymentType.CREDIT_CARD; // 我是信用卡策略
     }
 }

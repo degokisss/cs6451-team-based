@@ -2,6 +2,7 @@ package com.example.hotelreservationsystem.base.payment;
 
 import com.example.hotelreservationsystem.dto.PaymentRequest;
 import com.example.hotelreservationsystem.dto.PaymentResponse;
+import com.example.hotelreservationsystem.enums.PaymentType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,12 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
                 .transactionId(transactionId)
                 .message("PayPal payment processed successfully.")
                 .build();
+    }
+
+
+    // Return its type to factory
+    @Override
+    public PaymentType getType() {
+        return PaymentType.PAYPAL; // I am PayPal strategy
     }
 }
