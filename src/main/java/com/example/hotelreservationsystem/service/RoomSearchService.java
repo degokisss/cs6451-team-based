@@ -120,11 +120,11 @@ public class RoomSearchService {
 
         // Build search criteria
         SearchEvent.SearchCriteria criteria = SearchEvent.SearchCriteria.builder()
-            .checkInDate(checkInDate)
-            .checkOutDate(checkOutDate)
-            .roomTypeId(roomTypeId)
-            .hotelId(hotelId)
-            .build();
+                                                                        .checkInDate(checkInDate)
+                                                                        .checkOutDate(checkOutDate)
+                                                                        .roomTypeId(roomTypeId)
+                                                                        .hotelId(hotelId)
+                                                                        .build();
 
         List<Room> rooms;
 
@@ -175,24 +175,24 @@ public class RoomSearchService {
 
         // Build and fire search event
         SearchEvent event = SearchEvent.builder()
-            .eventType(eventType)
-            .customerId(customerId)
-            .timestamp(LocalDateTime.now())
-            .searchCriteria(criteria)
-            .resultsCount(resultsCount)
-            .build();
+                                       .eventType(eventType)
+                                       .customerId(customerId)
+                                       .timestamp(LocalDateTime.now())
+                                       .searchCriteria(criteria)
+                                       .resultsCount(resultsCount)
+                                       .build();
 
         notifyObservers(event);
 
         // Also fire generic SEARCH_PERFORMED event for overall metrics
         if (eventType != SearchEvent.SearchEventType.SEARCH_NO_RESULTS) {
             SearchEvent performedEvent = SearchEvent.builder()
-                .eventType(SearchEvent.SearchEventType.SEARCH_PERFORMED)
-                .customerId(customerId)
-                .timestamp(LocalDateTime.now())
-                .searchCriteria(criteria)
-                .resultsCount(resultsCount)
-                .build();
+                                                    .eventType(SearchEvent.SearchEventType.SEARCH_PERFORMED)
+                                                    .customerId(customerId)
+                                                    .timestamp(LocalDateTime.now())
+                                                    .searchCriteria(criteria)
+                                                    .resultsCount(resultsCount)
+                                                    .build();
             notifyObservers(performedEvent);
         }
     }

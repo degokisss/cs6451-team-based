@@ -130,24 +130,24 @@ public class BookingController {
             // Invalid or expired lock
             log.warn("Invalid booking request: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(e.getMessage());
+                                 .body(e.getMessage());
 
         } catch (SecurityException e) {
             // Lock belongs to another customer
             log.warn("Unauthorized lock access: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(e.getMessage());
+                                 .body(e.getMessage());
 
         } catch (IllegalStateException e) {
             // Room or customer not found
             log.error("Invalid state for booking creation: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(e.getMessage());
+                                 .body(e.getMessage());
 
         } catch (Exception e) {
             log.error("Failed to create booking", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Failed to create booking");
+                                 .body("Failed to create booking");
         }
     }
 
@@ -179,11 +179,7 @@ public class BookingController {
                 ? request.getReason()
                 : null;
 
-            CancellationResponse response = bookingService.cancelBooking(
-                orderId,
-                authenticatedCustomerId,
-                cancellationReason
-            );
+            CancellationResponse response = bookingService.cancelBooking(orderId, authenticatedCustomerId, cancellationReason);
 
             return ResponseEntity.ok(response);
 
@@ -191,24 +187,24 @@ public class BookingController {
             // Order not found
             log.warn("Order not found for cancellation: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(e.getMessage());
+                                 .body(e.getMessage());
 
         } catch (SecurityException e) {
             // Unauthorized - customer doesn't own the order
             log.warn("Unauthorized cancellation attempt: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(e.getMessage());
+                                 .body(e.getMessage());
 
         } catch (IllegalStateException e) {
             // Invalid status - order is COMPLETED or already CANCELLED
             log.warn("Invalid order status for cancellation: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(e.getMessage());
+                                 .body(e.getMessage());
 
         } catch (Exception e) {
             log.error("Failed to cancel booking", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Failed to cancel booking");
+                                 .body("Failed to cancel booking");
         }
     }
 }
