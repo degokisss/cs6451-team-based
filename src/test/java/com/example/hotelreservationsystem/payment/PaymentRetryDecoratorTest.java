@@ -1,6 +1,7 @@
-package com.example.hotelreservationsystem.base.payment.decorator;
+package com.example.hotelreservationsystem.payment;
 
 import com.example.hotelreservationsystem.base.payment.PaymentStrategy;
+import com.example.hotelreservationsystem.base.payment.decorator.PaymentRetryDecorator;
 import com.example.hotelreservationsystem.dto.PaymentRequest;
 import com.example.hotelreservationsystem.dto.PaymentResponse;
 import org.junit.jupiter.api.Test;

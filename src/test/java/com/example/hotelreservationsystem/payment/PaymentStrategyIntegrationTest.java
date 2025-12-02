@@ -1,4 +1,4 @@
-package com.example.hotelreservationsystem.base.payment;
+package com.example.hotelreservationsystem.payment;
 
 import com.example.hotelreservationsystem.base.payment.PaymentFactory;
 import com.example.hotelreservationsystem.base.payment.PaymentStrategy;
