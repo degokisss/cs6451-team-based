@@ -29,6 +29,9 @@ public class BookingLockService {
     private final List<LockEventObserver> observers = new CopyOnWriteArrayList<>();
 
     private static final String LOCK_PREFIX = "booking:lock:";
+    private static final String ROOM_ID_KEY = "roomId";
+    private static final String CUSTOMER_ID_KEY = "customerId";
+    private static final String LOCK_ID_KEY = "lockId";
 
     @Value("${booking.lock.ttl-minutes:10}")
     private Integer defaultTtlMinutes;
@@ -128,9 +131,9 @@ public class BookingLockService {
 
             // Create lock data
             Map<String, Object> lockData = new HashMap<>();
-            lockData.put("lockId", lockId);
-            lockData.put("customerId", customerId);
-            lockData.put("roomId", roomId);
+            lockData.put(LOCK_ID_KEY, lockId);
+            lockData.put(CUSTOMER_ID_KEY, customerId);
+            lockData.put(ROOM_ID_KEY, roomId);
             lockData.put("timestamp", now.toString());
 
             // Store in Redis with TTL
@@ -222,39 +225,9 @@ public class BookingLockService {
             }
 
             for (var key : keys) {
-                var lockJson = redisTemplate.opsForValue().get(key);
-                if (lockJson != null) {
-                    @SuppressWarnings("unchecked")
-                    Map<String, Object> lockData = objectMapper.readValue(lockJson, Map.class);
-
-                    if (lockId.equals(lockData.get("lockId"))) {
-                        // Verify ownership
-                        Long lockCustomerId = ((Number) lockData.get("customerId")).longValue();
-                        if (!lockCustomerId.equals(customerId)) {
-                            log.warn("Customer {} attempted to release lock {} owned by customer {}",
-                                customerId, lockId, lockCustomerId);
-                            return false;
-                        }
-
-                        // Release the lock
-                        var deleted = redisTemplate.delete(key);
-                        log.info("Released lock {} for room {} by customer {}",
-                            lockId, lockData.get("roomId"), customerId);
-
-                        // Notify observers of lock release
-                        if (deleted) {
-                            notifyObservers(LockEvent.builder()
-                                                     .eventType(LockEvent.LockEventType.LOCK_RELEASED)
-                                                     .roomId(((Number) lockData.get("roomId")).longValue())
-                                                     .customerId(customerId)
-                                                     .lockId(lockId)
-                                                     .timestamp(LocalDateTime.now())
-                                                     .reason("manual")
-                                                     .build());
-                        }
-
-                        return deleted;
-                    }
+                Optional<Boolean> result = releaseLockIfMatch(key, lockId, customerId);
+                if (result.isPresent()) {
+                    return result.get();
                 }
             }
 
@@ -268,6 +241,44 @@ public class BookingLockService {
             log.error("Failed to release lock: {}", lockId, e);
             throw new RuntimeException("Failed to release booking lock", e);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private Optional<Boolean> releaseLockIfMatch(String key, String lockId, Long customerId) throws JsonProcessingException {
+        var lockJson = redisTemplate.opsForValue().get(key);
+        if (lockJson == null) {
+            return Optional.empty();
+        }
+
+        Map<String, Object> lockData = objectMapper.readValue(lockJson, Map.class);
+
+        if (!lockId.equals(lockData.get(LOCK_ID_KEY))) {
+            return Optional.empty();
+        }
+
+        Long lockCustomerId = ((Number) lockData.get(CUSTOMER_ID_KEY)).longValue();
+        if (!lockCustomerId.equals(customerId)) {
+            log.warn("Customer {} attempted to release lock {} owned by customer {}",
+                customerId, lockId, lockCustomerId);
+            return Optional.of(false);
+        }
+
+        boolean deleted = Boolean.TRUE.equals(redisTemplate.delete(key));
+        log.info("Released lock {} for room {} by customer {}",
+            lockId, lockData.get(ROOM_ID_KEY), customerId);
+
+        if (deleted) {
+            notifyObservers(LockEvent.builder()
+                                     .eventType(LockEvent.LockEventType.LOCK_RELEASED)
+                                     .roomId(((Number) lockData.get(ROOM_ID_KEY)).longValue())
+                                     .customerId(customerId)
+                                     .lockId(lockId)
+                                     .timestamp(LocalDateTime.now())
+                                     .reason("manual")
+                                     .build());
+        }
+
+        return Optional.of(deleted);
     }
 
     /**
@@ -291,9 +302,9 @@ public class BookingLockService {
                 notifyObservers(LockEvent.builder()
                                          .eventType(LockEvent.LockEventType.LOCK_RELEASED)
                                          .roomId(roomId)
-                                         .customerId(lockInfo.get("customerId") != null ?
-                                             ((Number) lockInfo.get("customerId")).longValue() : null)
-                                         .lockId((String) lockInfo.get("lockId"))
+                                         .customerId(lockInfo.get(CUSTOMER_ID_KEY) != null ?
+                                             ((Number) lockInfo.get(CUSTOMER_ID_KEY)).longValue() : null)
+                                         .lockId((String) lockInfo.get(LOCK_ID_KEY))
                                          .timestamp(LocalDateTime.now())
                                          .reason("admin_release")
                                          .build());

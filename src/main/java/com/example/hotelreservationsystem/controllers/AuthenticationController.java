@@ -27,6 +27,8 @@ import java.util.Map;
 @Slf4j
 public class AuthenticationController {
 
+    private static final String MESSAGE_KEY = "message";
+
     private final AuthenticationService authenticationService;
     private final TokenStorageService tokenStorageService;
     private final InterceptorManager interceptorManager;
@@ -105,14 +107,14 @@ public class AuthenticationController {
                     var removed = tokenStorageService.removeToken(token);
 
                     if (removed) {
-                        result.put("message", "Logout successful");
+                        result.put(MESSAGE_KEY, "Logout successful");
                     } else {
-                        result.put("message", "Token not found or already logged out");
+                        result.put(MESSAGE_KEY, "Token not found or already logged out");
                     }
                     return result;
                 }
 
-                result.put("message", "Invalid Authorization header");
+                result.put(MESSAGE_KEY, "Invalid Authorization header");
                 context.setStatusCode(400);
                 return result;
             });

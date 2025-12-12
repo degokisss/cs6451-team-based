@@ -42,6 +42,7 @@ public class BookingService {
     private final CustomerRepository customerRepository;
     private final NotificationServiceFactory notificationServiceFactory;
     private final RoomService roomService;
+    private final Random random = new Random();
 
     /**
      * Get a booking order by ID for the authenticated customer.
@@ -215,7 +216,6 @@ public class BookingService {
      */
     private String generateCheckInCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        Random random = new Random();
         StringBuilder code = new StringBuilder(8);
 
         for (int i = 0; i < 8; i++) {
