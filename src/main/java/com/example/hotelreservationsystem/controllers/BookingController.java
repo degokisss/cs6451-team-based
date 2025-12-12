@@ -35,7 +35,7 @@ public class BookingController {
      * @return BookingResponse with order details
      */
     @GetMapping("/{orderId}")
-    public ResponseEntity<?> getBooking(@PathVariable Long orderId) {
+    public ResponseEntity<Object> getBooking(@PathVariable Long orderId) {
         try {
             var authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication == null || !authentication.isAuthenticated()) {
@@ -69,7 +69,7 @@ public class BookingController {
      * @return BookingResponse with order details
      */
     @GetMapping("/room/{roomId}")
-    public ResponseEntity<?> getBookingByRoom(@PathVariable Long roomId) {
+    public ResponseEntity<Object> getBookingByRoom(@PathVariable Long roomId) {
         try {
             var authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication == null || !authentication.isAuthenticated()) {
@@ -104,7 +104,7 @@ public class BookingController {
      * @return BookingResponse with order details
      */
     @PostMapping
-    public ResponseEntity<?> createBooking(@Valid @RequestBody BookingCreateRequest request) {
+    public ResponseEntity<Object> createBooking(@Valid @RequestBody BookingCreateRequest request) {
         try {
             // Extract customer from JWT token
             var authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -161,7 +161,7 @@ public class BookingController {
      * @return CancellationResponse with cancellation details
      */
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<?> cancelBooking(
+    public ResponseEntity<Object> cancelBooking(
         @PathVariable Long orderId,
         @RequestBody(required = false) @Valid CancellationRequest request) {
 

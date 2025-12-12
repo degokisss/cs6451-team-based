@@ -102,10 +102,16 @@ class InterceptorPatternTest {
             }
 
             @Override
-            public void after(RequestContext context) {}
+            public void after(RequestContext context) {
+                // No-op for this test double; interception stops in before()
+                throw new UnsupportedOperationException("after not used in blocking interceptor");
+            }
 
             @Override
-            public void afterCompletion(RequestContext context, Exception exception) {}
+            public void afterCompletion(RequestContext context, Exception exception) {
+                // No-op for this test double; interception stops in before()
+                throw new UnsupportedOperationException("afterCompletion not used in blocking interceptor");
+            }
 
             @Override
             public int getOrder() {

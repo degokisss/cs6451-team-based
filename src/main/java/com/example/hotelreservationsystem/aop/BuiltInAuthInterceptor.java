@@ -30,6 +30,7 @@ public class BuiltInAuthInterceptor {
 
     private static final long SLOW_THRESHOLD = 1000; // 1 second
     private static final long WARNING_THRESHOLD = 500; // 500ms
+    private static final String UNKNOWN = "unknown";
 
     private final List<PerformanceMetric> metrics = Collections.synchronizedList(new ArrayList<>());
     private static final int MAX_METRICS = 1000;
@@ -45,7 +46,7 @@ public class BuiltInAuthInterceptor {
 
         String uri = request != null ? request.getRequestURI() : "N/A";
         String method = request != null ? request.getMethod() : "N/A";
-        String clientIp = request != null ? clientIp(request) : "unknown";
+        String clientIp = request != null ? clientIp(request) : UNKNOWN;
 
         AuditEvent auditEvent = beginAudit(uri, method, clientIp, request);
 
@@ -215,10 +216,10 @@ public class BuiltInAuthInterceptor {
 
     private String clientIp(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.isEmpty() || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("X-Real-IP");
         }
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.isEmpty() || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
         if (ip != null && ip.contains(",")) {
