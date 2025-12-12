@@ -22,12 +22,12 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true, exclude = {"customer", "room"})
 @Entity
 @Table(
-    name = "\"order\"",  // Quoted because "order" is a SQL reserved keyword
-    indexes = {
-        @Index(name = "idx_order_customer", columnList = "customer_id"),
-        @Index(name = "idx_order_room", columnList = "room_id"),
-        @Index(name = "idx_order_status", columnList = "order_status")
-    }
+        name = "\"order\"",  // Quoted because "order" is a SQL reserved keyword
+        indexes = {
+                @Index(name = "idx_order_customer", columnList = "customer_id"),
+                @Index(name = "idx_order_room", columnList = "room_id"),
+                @Index(name = "idx_order_status", columnList = "order_status")
+        }
 )
 @Builder
 @AllArgsConstructor
@@ -73,7 +73,6 @@ public class Order extends BaseEntityAudit implements PricingObserver {
 
     public void initState() {
         this.reservationState = ReservationContext.stateFor(orderStatus);
-        reservationState.pending(new ReservationContext(this));
     }
 
     @PostLoad
