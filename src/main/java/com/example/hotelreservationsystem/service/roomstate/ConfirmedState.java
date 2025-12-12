@@ -11,8 +11,8 @@ public class ConfirmedState implements ReservationState {
 
     @Override
     public void confirm(ReservationContext context) {
-        log.error("Order already CONFIRMED");
-        throw new UnsupportedOperationException("Order already confirmed");
+        log.warn("Order already CONFIRMED - staying in CONFIRMED");
+        stay(context, OrderStatus.CONFIRMED);
     }
 
     @Override

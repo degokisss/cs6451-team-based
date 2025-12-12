@@ -21,7 +21,7 @@ public class PendingState implements ReservationState {
 
     @Override
     public void complete(ReservationContext context) {
-        log.error("Cannot complete order while in PENDING state");
-        throw new UnsupportedOperationException("Order is pending and cannot be completed");
+        log.warn("Cannot complete order while in PENDING state - staying in PENDING");
+        stay(context, OrderStatus.PENDING);
     }
 }
