@@ -1,6 +1,7 @@
 package com.example.hotelreservationsystem.controllers;
 
 import com.example.hotelreservationsystem.base.pricing.RoomPriceFactory;
+import com.example.hotelreservationsystem.aop.BuiltInInterceptor;
 import com.example.hotelreservationsystem.dto.RoomCreateRequest;
 import com.example.hotelreservationsystem.dto.RoomCreateResponse;
 import com.example.hotelreservationsystem.dto.RoomPriceUpdateRequest;
@@ -20,6 +21,7 @@ import java.util.List;
 @Validated
 @RequiredArgsConstructor
 @RequestMapping("/api/rooms")
+@BuiltInInterceptor
 public class RoomController {
 
     private final RoomService roomService;
