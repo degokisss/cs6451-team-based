@@ -1,5 +1,6 @@
 package com.example.hotelreservationsystem.service.roomstate;
 
+import com.example.hotelreservationsystem.enums.OrderStatus;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -10,19 +11,19 @@ public class CancelledState implements ReservationState {
 
     @Override
     public void confirm(ReservationContext context) {
-        log.error("Cancelled state");
-        throw new UnsupportedOperationException("Order cancelled");
+        log.warn("Cannot confirm cancelled order - staying in CANCELLED");
+        stay(context, OrderStatus.CANCELLED);
     }
 
     @Override
     public void cancel(ReservationContext context) {
-        log.error("Order already CANCELLED");
-        throw new UnsupportedOperationException("Order already cancelled");
+        log.warn("Order already CANCELLED - staying in CANCELLED");
+        stay(context, OrderStatus.CANCELLED);
     }
 
     @Override
     public void complete(ReservationContext context) {
-        log.error("Cannot complete order in CANCELLED state");
-        throw new UnsupportedOperationException("Cancelled orders cannot be completed");
+        log.warn("Cannot complete order in CANCELLED state - staying in CANCELLED");
+        stay(context, OrderStatus.CANCELLED);
     }
 }
