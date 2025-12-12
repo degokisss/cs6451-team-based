@@ -16,26 +16,36 @@ public class ReservationContext {
     }
 
     public void confirm() {
-        getState(order.getOrderStatus()).confirm(this);
+        resolveState().confirm(this);
     }
 
     public void cancel() {
-        getState(order.getOrderStatus()).cancel(this);
+        resolveState().cancel(this);
     }
 
     public void complete() {
-        getState(order.getOrderStatus()).complete(this);
+        resolveState().complete(this);
     }
 
     void transitionTo(OrderStatus status) {
         order.setOrderStatus(status);
+        order.setReservationState(stateFor(status));
     }
 
     public Order getOrder() {
         return order;
     }
 
-    private ReservationState getState(OrderStatus status) {
+    private ReservationState resolveState() {
+        ReservationState state = order.getReservationState();
+        if (state == null) {
+            state = stateFor(order.getOrderStatus());
+            order.setReservationState(state);
+        }
+        return state;
+    }
+
+    public static ReservationState stateFor(OrderStatus status) {
         return switch (status) {
             case PENDING -> new PendingState();
             case CONFIRMED -> new ConfirmedState();

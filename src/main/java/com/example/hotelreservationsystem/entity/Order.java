@@ -72,7 +72,13 @@ public class Order extends BaseEntityAudit implements PricingObserver {
 
 
     public void initState() {
+        this.reservationState = ReservationContext.stateFor(orderStatus);
         reservationState.pending(new ReservationContext(this));
+    }
+
+    @PostLoad
+    public void rehydrateState() {
+        this.reservationState = ReservationContext.stateFor(orderStatus);
     }
     /**
      * Observer Pattern implementation
