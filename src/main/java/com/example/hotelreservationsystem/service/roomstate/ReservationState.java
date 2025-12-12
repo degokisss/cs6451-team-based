@@ -7,6 +7,9 @@ import com.example.hotelreservationsystem.enums.OrderStatus;
  * Implementations should only orchestrate OrderStatus changes; side effects stay in services.
  */
 public interface ReservationState {
+    default void pending(ReservationContext context) {
+        context.transitionTo(OrderStatus.PENDING);
+    }
 
     void confirm(ReservationContext context);
 

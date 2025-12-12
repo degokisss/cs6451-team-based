@@ -166,9 +166,10 @@ public class BookingService {
             .checkOutDate(request.getCheckOutDate())
             .numberOfNights(numberOfNights)
             .totalPrice(totalPrice)
-            .orderStatus(OrderStatus.PENDING)
             .checkInCode(checkInCode)
             .build();
+
+        order.initState();
 
         // Step 7: Save order
         Order savedOrder = orderRepository.save(order);
