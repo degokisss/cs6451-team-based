@@ -1,22 +1,28 @@
 package com.example.hotelreservationsystem.service.roomstate;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * Terminal cancelled state; transitions are no-ops.
+ * Terminal cancelled state; invalid transitions throw exceptions.
  */
+@Slf4j
 public class CancelledState implements ReservationState {
 
     @Override
     public void confirm(ReservationContext context) {
-        // No transition from cancelled
+        log.error("Cancelled state");
+        throw new UnsupportedOperationException("Order cancelled");
     }
 
     @Override
     public void cancel(ReservationContext context) {
-        // Already cancelled
+        log.error("Order already CANCELLED");
+        throw new UnsupportedOperationException("Order already cancelled");
     }
 
     @Override
     public void complete(ReservationContext context) {
-        // Cannot complete a cancelled order
+        log.error("Cannot complete order in CANCELLED state");
+        throw new UnsupportedOperationException("Cancelled orders cannot be completed");
     }
 }

@@ -1,22 +1,28 @@
 package com.example.hotelreservationsystem.service.roomstate;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * Terminal completed state; transitions are no-ops.
+ * Terminal completed state; invalid transitions throw exceptions.
  */
+@Slf4j
 public class CompletedState implements ReservationState {
 
     @Override
     public void confirm(ReservationContext context) {
-        // Already completed
+        log.error("Order already COMPLETED");
+        throw new UnsupportedOperationException("Order already completed");
     }
 
     @Override
     public void cancel(ReservationContext context) {
-        // Cannot cancel a completed order
+        log.error("Cannot cancel order in COMPLETED state");
+        throw new UnsupportedOperationException("Completed orders cannot be cancelled");
     }
 
     @Override
     public void complete(ReservationContext context) {
-        // Already completed
+        log.error("Order already COMPLETED");
+        throw new UnsupportedOperationException("Order already completed");
     }
 }

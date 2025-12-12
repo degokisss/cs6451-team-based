@@ -2,6 +2,8 @@ package com.example.hotelreservationsystem.entity;
 
 import com.example.hotelreservationsystem.base.pricing.PricingObserver;
 import com.example.hotelreservationsystem.enums.OrderStatus;
+import com.example.hotelreservationsystem.service.roomstate.ReservationContext;
+import com.example.hotelreservationsystem.service.roomstate.ReservationState;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -65,6 +67,13 @@ public class Order extends BaseEntityAudit implements PricingObserver {
     @Column(name = "cancellation_reason", length = 500)
     private String cancellationReason;
 
+    @Transient
+    private ReservationState reservationState;
+
+
+    public void initState() {
+        reservationState.pending(new ReservationContext(this));
+    }
     /**
      * Observer Pattern implementation
      * Called when room price changes to update order's total price

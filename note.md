@@ -37,7 +37,7 @@
 - Sequence Diagram (Zander)
 - Component Diagram (Zander??)
 #### 11.EVALUATION (Ismail)
-#### 12.REFLECTION (Ismail)
+#### 12.REFLECTION (All)
 
 ### Notices
 - <span style="color:red">Finish the coding before Tuesday.</span>
