@@ -40,11 +40,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
-        @RequestBody @Validated LoginRequest request,
-        HttpServletRequest httpRequest,
-        HttpServletResponse httpResponse
-    ) {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Validated LoginRequest request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         // Create request context
         RequestContext context = new RequestContext(httpRequest, httpResponse);
 
@@ -53,10 +49,7 @@ public class AuthenticationController {
 
         try {
             // Execute interceptor chain around the operation
-            LoginResponse response = chain.executeChain(context, () -> {
-                // This is the actual business logic
-                return authenticationService.login(request);
-            });
+            LoginResponse response = chain.executeChain(context, () -> authenticationService.login(request));
 
             return ResponseEntity.ok(response);
 

@@ -60,7 +60,7 @@ public class AuditInterceptor implements Interceptor {
 
         auditLog.add(event);
 
-        log.info("[PURE AUDIT] Event {} - {} {} initiated from {}",
+        log.info("[AUDIT] Event {} - {} {} initiated from {}",
             eventId, context.getMethod(), uri, event.getClientIP());
 
         return true;
@@ -69,7 +69,7 @@ public class AuditInterceptor implements Interceptor {
     @Override
     public void after(RequestContext context) {
         // After phase - can add additional processing here if needed
-        log.debug("[PURE AUDIT] After phase for {}", context.getRequestURI());
+        log.debug("[AUDIT] After phase for {}", context.getRequestURI());
     }
 
     @Override
@@ -137,7 +137,7 @@ public class AuditInterceptor implements Interceptor {
 
     private void logAuditResult(AuditEvent event) {
         String message = String.format(
-            " [PURE AUDIT] Event %s - %s: %s (Status: %d, Duration: %dms, IP: %s)",
+            " [AUDIT] Event %s - %s: %s (Status: %d, Duration: %dms, IP: %s)",
             event.getEventId(), event.getEventType(), event.getStatus(),
             event.getHttpStatusCode(), event.getDurationMs(), event.getClientIP()
         );

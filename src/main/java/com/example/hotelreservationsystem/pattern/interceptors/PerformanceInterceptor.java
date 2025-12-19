@@ -38,7 +38,7 @@ public class PerformanceInterceptor implements Interceptor {
     @Override
     public boolean before(RequestContext context) {
         context.setAttribute(START_TIME_KEY, System.currentTimeMillis());
-        log.debug("[PURE PERF] Starting timer for {}", context.getRequestURI());
+        log.debug("[PERF] Starting timer for {}", context.getRequestURI());
         return true;
     }
 
@@ -73,10 +73,10 @@ public class PerformanceInterceptor implements Interceptor {
 
         // Check for performance issues
         if (executionTime > SLOW_THRESHOLD) {
-            log.warn(" [PURE PERF] SLOW REQUEST: {} {} - {}ms (threshold: {}ms)",
+            log.warn(" [PERF] SLOW REQUEST: {} {} - {}ms (threshold: {}ms)",
                 context.getMethod(), context.getRequestURI(), executionTime, SLOW_THRESHOLD);
         } else if (executionTime > WARNING_THRESHOLD) {
-            log.warn(" [PURE PERF] Approaching threshold: {} {} - {}ms",
+            log.warn(" [PERF] Approaching threshold: {} {} - {}ms",
                 context.getMethod(), context.getRequestURI(), executionTime);
         }
 
@@ -92,7 +92,7 @@ public class PerformanceInterceptor implements Interceptor {
 
     private void logPerformance(PerformanceMetric metric) {
         String emoji = getPerformanceEmoji(metric.getExecutionTimeMs());
-        log.info("{} [PURE PERF] {} {} - {}ms - Status: {}",
+        log.info("{} [PERF] {} {} - {}ms - Status: {}",
             emoji, metric.getHttpMethod(), metric.getRequestURI(),
             metric.getExecutionTimeMs(), metric.getStatusCode());
     }

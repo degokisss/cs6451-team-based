@@ -25,12 +25,6 @@ public class JpaAuditingConfig {
         @Override
         public Optional<String> getCurrentAuditor() {
             // TODO: Replace with actual authentication logic
-            // Example with Spring Security:
-            // Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            // if (authentication == null || !authentication.isAuthenticated()) {
-            //     return Optional.of("SYSTEM");
-            // }
-            // return Optional.of(authentication.getName());
 
             return Optional.of("SYSTEM");
         }

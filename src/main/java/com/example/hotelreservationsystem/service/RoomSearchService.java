@@ -31,11 +31,7 @@ public class RoomSearchService {
     /**
      * Constructor that auto-registers Spring-managed observers
      */
-    public RoomSearchService(
-        RoomRepository roomRepository,
-        BookingLockService bookingLockService,
-        List<SearchEventObserver> searchObservers
-    ) {
+    public RoomSearchService(RoomRepository roomRepository, BookingLockService bookingLockService, List<SearchEventObserver> searchObservers) {
         this.roomRepository = roomRepository;
         this.bookingLockService = bookingLockService;
 
@@ -108,13 +104,7 @@ public class RoomSearchService {
      * @param customerId   Customer performing the search (optional)
      * @return List of available rooms
      */
-    public List<Room> searchAvailableRooms(
-        LocalDate checkInDate,
-        LocalDate checkOutDate,
-        Long roomTypeId,
-        Long hotelId,
-        Long customerId
-    ) {
+    public List<Room> searchAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate, Long roomTypeId, Long hotelId, Long customerId) {
         log.info("Searching rooms - checkIn: {}, checkOut: {}, roomTypeId: {}, hotelId: {}, customerId: {}",
             checkInDate, checkOutDate, roomTypeId, hotelId, customerId);
 
@@ -136,20 +126,20 @@ public class RoomSearchService {
             // Get all available rooms
             rooms = roomRepository.findAll().stream()
                                             .filter(room -> room.getRoomStatus() == RoomStatus.AVAILABLE)
-                                            .collect(Collectors.toList());
+                                            .toList();
         }
 
         // Filter by hotel if specified
         if (hotelId != null) {
             rooms = rooms.stream()
                          .filter(room -> room.getHotel() != null && room.getHotel().getId().equals(hotelId))
-                         .collect(Collectors.toList());
+                         .toList();
         }
 
         // Exclude locked rooms
         rooms = rooms.stream()
                      .filter(room -> !bookingLockService.isLocked(room.getId()))
-                     .collect(Collectors.toList());
+                     .toList();
 
         log.info("Found {} available rooms", rooms.size());
 
